@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Castoro+Titling&display=swap');
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  position: absolute;
+  width: 10px;
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: #dfdddd;  
+}
+
+@layer base {
+  body {
+    @apply font-content text-surface-800;
+  }
+  h1{
+    @apply font-title text-primary-500 text-2xl;
+  }
+
+  h2, h3, h4, h5, h6 {
+    @apply font-subtitle text-primary-600;
+  }
+
+  .card{
+    @apply bg-surface-0 shadow-lg rounded-lg p-4;
+  }
+}
