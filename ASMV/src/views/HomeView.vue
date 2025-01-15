@@ -7,7 +7,7 @@
           <h1 class="text-center mt-2">Nossos Padroeiros</h1>
           <div class="flex flex-col items-center mt-10 gap-8">
             <div v-for="padroeiro in padroeiros" :key="padroeiro.image" class="flex flex-col items-center">
-              <Avatar :image="padroeiro.image" class="w-48" shape="circle" />
+              <img :src="padroeiro.image" class="w-48 aspect-square rounded-full" />
               <small>{{ padroeiro.name }}</small>
             </div>
           </div>
@@ -115,15 +115,17 @@
 
     <div class="mt-40 p-4 py-20 flex flex-col items-center">
       <img src="/home/ornamento-topo.svg" alt="ornamentos em arabesco" class="w-28 h-28 mx-auto mb-2">
-      <h1 class="text-center border-t border-b border-secondary-500 md:w-5/6 w-full py-2">Louvemos aos varões gloriosos, e aos nossos pais em sua geração</h1>
+      <h1 class="text-center border-t border-b border-secondary-500 md:w-5/6 w-full py-2 pt-4">
+        Louvemos aos grandes homens, e aos nossos pais em sua geração
+      </h1>
       <img src="/home/ornamento-topo.svg" alt="ornamentos em arabesco" class="w-28 h-28 mx-auto mt-2 rotate-180">
     </div>
 
     <div class="grid sm:grid-cols-2 grid-cols-1 md:grid-cols-6 gap-6">
-      <div v-for="varoes in varoes" :key="varoes.image" class="flex flex-col items-center justify-center">
-        <Avatar :image="varoes.image" class="w-48" shape="circle" />
-        <h2 class="text-center font-bold">{{ varoes.name }}</h2>
-        <div class="text-center text-surface-600 font-light">{{ varoes.date }}</div>
+      <div v-for="homens in homens" :key="homens.image" class="flex flex-col items-center justify-center">
+        <img :src="homens.image" class="w-48 aspect-square rounded-full" />
+        <h2 class="text-center font-bold">{{ homens.name }}</h2>
+        <div class="text-center text-surface-600 font-light">{{ homens.date }}</div>
       </div>
 
     </div>
@@ -131,89 +133,89 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from "vue";
-import Slider from "@/components/slider.vue";
-import Avatar from "primevue/avatar";
-import LatestArticles from "@/components/latestarticles.vue";
-import socialbuttons from "@/components/socialbuttons.vue";
+  import { ref, onMounted, onUnmounted } from "vue";
+  import Slider from "@/components/slider.vue";
+  import Avatar from "primevue/avatar";
+  import LatestArticles from "@/components/latestarticles.vue";
+  import socialbuttons from "@/components/socialbuttons.vue";
 
-export default {
-  components: {
-    Slider,
-    LatestArticles,
-    socialbuttons,
-    Avatar,
-  },
-  data() {
-    return {
-      sliderImages: [
-        "home/slider/1.jpg",
-        "home/slider/2.jpg",
-        "home/slider/3.jpg",
-        "home/slider/4.jpg",
-      ],
-      padroeiros: [
-        { image: "home/padroeiros/santa-maria-das-vitorias.jpg", name: "Santa Maria das Vitórias" },
-        { image: "home/padroeiros/sao-pio-x.jpg", name: "São Pio X" },
-        { image: "home/padroeiros/anchieta.jpg", name: "São José de Anchieta" },
-      ],
-      categories: [
-        { name: "Crítica e Doutrina", image: "home/categories/critica-e-doutrina.jpg" },
-        { name: "Apologética", image: "home/categories/apologetica.jpg" },
-        { name: "Pensamento Brasileiro", image: "home/categories/pensamento-brasileiro.jpg" },
-        { name: "Crônica Católica", image: "home/categories/cronica-catolica.jpg" },
-      ],
-      varoes: [
-        { image: "home/varoes/santo-agostinho.png", date: "354-430", name: "Santo Agostinho" },
-        { image: "home/varoes/cardeal-merry-del-val.png", date: "1865-1930", name: "Cardeal Merry del Val" },
-        { image: "home/varoes/jacques-bossuet.png", date: "1627-1704", name: "Jacques Bossuet" },
-        { image: "home/varoes/d-lefebvre.png", date: "1905-1991", name: "D. Lefebvre" },
-        { image: "home/varoes/d-mayer.png", date: "1904-1991", name: "D. Mayer" },
-        { image: "home/varoes/d-pestana.png", date: "1928-2011", name: "D. Pestana" },
-      ],
-    };
-  },
-  setup() {
-    const stickyElement = ref(null);
-    const stickyContainer = ref(null);
+  export default {
+    components: {
+      Slider,
+      LatestArticles,
+      socialbuttons,
+      Avatar,
+    },
+    data() {
+      return {
+        sliderImages: [
+          "home/slider/1.jpg",
+          "home/slider/2.jpg",
+          "home/slider/3.jpg",
+          "home/slider/4.jpg",
+        ],
+        padroeiros: [
+          { image: "home/padroeiros/santa-maria-das-vitorias.jpg", name: "Santa Maria das Vitórias" },
+          { image: "home/padroeiros/sao-pio-x.jpg", name: "São Pio X" },
+          { image: "home/padroeiros/anchieta.jpg", name: "São José de Anchieta" },
+        ],
+        categories: [
+          { name: "Crítica e Doutrina", image: "home/categories/critica-e-doutrina.jpg" },
+          { name: "Apologética", image: "home/categories/apologetica.jpg" },
+          { name: "Pensamento Brasileiro", image: "home/categories/pensamento-brasileiro.jpg" },
+          { name: "Crônica Católica", image: "home/categories/cronica-catolica.jpg" },
+        ],
+        homens: [
+          { image: "home/homens/santo-agostinho.png", date: "354-430", name: "Santo Agostinho" },
+          { image: "home/homens/cardeal-merry-del-val.png", date: "1865-1930", name: "Cardeal Merry del Val" },
+          { image: "home/homens/jacques-bossuet.png", date: "1627-1704", name: "Jacques Bossuet" },
+          { image: "home/homens/d-lefebvre.png", date: "1905-1991", name: "D. Lefebvre" },
+          { image: "home/homens/d-mayer.png", date: "1904-1991", name: "D. Mayer" },
+          { image: "home/homens/d-pestana.png", date: "1928-2011", name: "D. Pestana" },
+        ],
+      };
+    },
+    setup() {
+      const stickyElement = ref(null);
+      const stickyContainer = ref(null);
 
-    const handleScroll = () => {
-      const container = stickyContainer.value;
-      const sticky = stickyElement.value;
+      const handleScroll = () => {
+        const container = stickyContainer.value;
+        const sticky = stickyElement.value;
 
-      const containerRect = container.getBoundingClientRect();
-      const stickyRect = sticky.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const stickyRect = sticky.getBoundingClientRect();
 
-      sticky.style.width = `${containerRect.width}px`;
+        sticky.style.width = `${containerRect.width}px`;
 
-      if (containerRect.top <= 0 && containerRect.bottom > stickyRect.height) {
-        sticky.style.position = "fixed";
-        sticky.style.top = "5rem";
-        sticky.style.bottom = "unset";
-      } else if (containerRect.bottom <= stickyRect.height) {
-        sticky.style.position = "absolute";
-        sticky.style.top = "unset";
-        sticky.style.bottom = "0";
-      } else {
-        sticky.style.position = "relative";
-        sticky.style.top = "unset";
-        sticky.style.bottom = "unset";
-        sticky.style.width = "unset";
-      }
-    };
+        if (containerRect.top <= 0 && containerRect.bottom > stickyRect.height) {
+          sticky.style.position = "fixed";
+          sticky.style.top = "5rem";
+          sticky.style.bottom = "unset";
+        } else if (containerRect.bottom <= stickyRect.height) {
+          sticky.style.position = "absolute";
+          sticky.style.top = "unset";
+          sticky.style.bottom = "0";
+        } else {
+          sticky.style.position = "relative";
+          sticky.style.top = "unset";
+          sticky.style.bottom = "unset";
+          sticky.style.width = "unset";
+        }
+      };
 
-    onMounted(() => {
-      window.addEventListener("scroll", handleScroll);
-    });
+      onMounted(() => {
+        window.addEventListener("scroll", handleScroll);
+      });
 
-    onUnmounted(() => {
-      window.removeEventListener("scroll", handleScroll);
-    });
+      onUnmounted(() => {
+        window.removeEventListener("scroll", handleScroll);
+      });
 
-    return {
-      stickyElement,
-      stickyContainer,
-    };
-  },
-};
+      return {
+        stickyElement,
+        stickyContainer,
+      };
+    },
+  };
 </script>
