@@ -1,14 +1,14 @@
 <template>
   <div v-if="sortedArticles.length">
     <div v-for="article in sortedArticles" :key="article.title">
-      <a
-        :href="`/artigos/${generateSlug(article.category)}/${generateSlug(article.title)}`" 
+      <router-link
+        :to="`/Artigos/${generateSlug(article.category)}/${generateSlug(article.title)}`" 
         class=""
       >
         <p class="py-4 px-2 hover:bg-surface-50 hover:text-primary-500 transition-all ">
           {{ article.title }}
         </p>
-      </a>
+      </router-link>
     </div>    
   </div>
   <div v-else class="text-center py-4">
