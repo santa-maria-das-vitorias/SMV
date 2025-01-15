@@ -29,12 +29,12 @@ const router = createRouter({
     {
       path:'/Artigos',
       name: 'article',
-      component: ArticlesView,
+      component:  () => import('../views/ArticlesView.vue'),
     },
     {
       path: '/Artigos/:categoria/:titulo',
       name: 'article-specific',
-      component: ArticlesView,
+      component:  () => import('../views/ArticlesView.vue'),
       props: true,
     },
   ],

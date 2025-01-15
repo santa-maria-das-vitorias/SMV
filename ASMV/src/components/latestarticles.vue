@@ -8,7 +8,7 @@
         <p class="py-4 px-2 hover:bg-surface-50 hover:text-primary-500 transition-all ">
           {{ article.title }}
         </p>
-      </router-link>
+      </a>
     </div>    
   </div>
   <div v-else class="text-center py-4">
