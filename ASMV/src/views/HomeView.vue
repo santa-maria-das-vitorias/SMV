@@ -16,6 +16,7 @@
           <h1 class="text-center mt-2">Últimos Artigos</h1>
           <LatestArticles :articles="articles" />
         </div>
+        
         <div ref="stickyContainer" class="hidden md:block md:col-span-1 h-full relative">
           <div ref="stickyElement" class="flex flex-col gap-5">
             <div class="card p-4">
@@ -70,6 +71,7 @@
         
       </div>
     </div>
+
     <div class="mt-40 bg-primary-500 p-4 py-20">
       <h1 class="text-center text-white mt-4">
         “Aquele que só busca palavras não terá nada; mas o que é possuidor de entendimento ama a sua alma, e o conservador da prudência achará bens.”
@@ -134,9 +136,9 @@
 
 <script>
   import { ref, onMounted, onUnmounted } from "vue";
-  import Slider from "@/components/slider.vue";
+  import Slider from "@/components/Home/slider.vue";
   import Avatar from "primevue/avatar";
-  import LatestArticles from "@/components/latestarticles.vue";
+  import LatestArticles from "@/components/Articles/latestArticles.vue";
   import socialbuttons from "@/components/socialbuttons.vue";
 
   export default {

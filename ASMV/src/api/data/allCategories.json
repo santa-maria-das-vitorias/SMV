@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "title": "Apologética",
+    "slug": "apologetica"
+  },
+  {
+    "id": 2,
+    "title": "Crítica e Doutrina",
+    "slug": "critica-e-doutrina"
+  },
+  {
+    "id": 3,
+    "title": "Crônica Católica",
+    "slug": "cronica-catolica"
+  },
+  {
+    "id": 4,
+    "title": "Doutrina",
+    "slug": "doutrina"
+  },
+  {
+    "id": 5,
+    "title": "Espiritualidade",
+    "slug": "espiritualidade"
+  },
+  {
+    "id": 6,
+    "title": "Filosofia",
+    "slug": "filosofia"
+  },
+  {
+    "id": 7,
+    "title": "História",
+    "slug": "historia"
+  },
+  {
+    "id": 8,
+    "title": "Pensamento Brasileiro",
+    "slug": "pensamento-brasileiro"
+  }
+]
+

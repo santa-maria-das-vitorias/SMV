@@ -1,0 +1,59 @@
+[
+  { 
+    "id": 1,
+    "title": "Os fundamentos da defesa da fé cristã",
+    "slug": "os-fundamentos-da-defesa-da-fe-crista",
+    "category": "Apologética",
+    "date": "2023-12-01T10:00:00Z"
+  },
+  { 
+    "id": 2,
+    "title": "Uma análise crítica sobre o relativismo moral", 
+    "slug": "uma-analise-critica-sobre-o-relativismo-moral",
+    "category": "Crítica e Doutrina", 
+    "date": "2023-12-03T09:45:00Z"
+  },
+  { 
+    "id": 3,
+    "title": "Mons. Tihamer Toth e a realeza social de Cristo", 
+    "slug": "mons-tihamer-toth-e-a-realeza-social-de-cristo",
+    "category": "Crônica Católica", 
+    "date": "2023-12-04T18:00:00Z"
+  },
+  { 
+    "id": 4,
+    "title": "O catecismo e sua aplicação na vida cristã", 
+    "slug": "o-catecismo-e-sua-aplicacao-na-vida-crista",
+    "category": "Doutrina", 
+    "date": "2023-12-05T11:15:00Z"
+  },
+  { 
+    "id": 5,
+    "title": "Os exercícios espirituais de Santo Inácio de Loyola", 
+    "slug": "os-exercicios-espirituais-de-santo-inacio-de-loyola",
+    "category": "Espiritualidade", 
+    "date": "2023-12-06T08:00:00Z"
+  },
+  { 
+    "id": 6,
+    "title": "A ética de Aristóteles e a visão cristã", 
+    "slug": "a-etica-de-aristoteles-e-a-visao-crista",
+    "category": "Filosofia", 
+    "date": "2023-12-07T16:20:00Z"
+  },
+  { 
+    "id": 7,
+    "title": "O papel da Igreja na colonização do Brasil", 
+    "slug": "o-papel-da-igreja-na-colonizacao-do-brasil",
+    "category": "História", 
+    "date": "2023-12-08T10:45:00Z"
+  },
+  { 
+    "id": 8,
+    "title": "O pensamento católico de Alceu Amoroso Lima", 
+    "slug": "o-pensamento-catolico-de-alceu-amoroso-lima",
+    "category": "Pensamento Brasileiro", 
+    "date": "2023-12-09T15:00:00Z"
+  }
+]
+

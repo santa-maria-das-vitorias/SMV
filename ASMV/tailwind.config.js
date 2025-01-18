@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 import prose from '@tailwindcss/typography';
-import { title } from 'process';
 
 export const content = [
   "./index.html",
@@ -16,9 +15,9 @@ export const theme = {
     typography: ({ theme }) => ({
       DEFAULT: {
         css: {
-          color: theme('colors.blue.500'),
+          color: theme('colors.surface.500'),
           p: {
-            color: theme('colors.surface.900'),
+            color: theme('colors.surface.700'),
           },
           'h1, h2, h3, h4, h5, h6': {
             color: theme('colors.primary.500'),
@@ -45,14 +44,14 @@ export const theme = {
         200: '#B3DCF2',
         300: '#65B6E5',
         400: '#1C93D7',
-        500: '#027DC3', // Azul marinho principal
+        500: '#027DC3',
         600: '#005486',
         700: '#023A63',
         800: '#002B4D',
         900: '#031836',
       },
       surface: {
-        0: '#ffffff', // Branco como base
+        0: '#ffffff',
         50: '#f9fafb',
         100: '#f2f4f5',
         200: '#e5e7eb',
@@ -65,16 +64,16 @@ export const theme = {
         900: '#242627',
       },
       secondary: {
-        "50": "#fcf0cc",
-        "100": "#f8e299",
-        "200": "#f5d366",
-        "300": "#f1c533",
-        "400": "#eeb600",
-        "500": "#EEB600",
-        "600": "#b28800",
-        "700": "#775b00",
-        "800": "#3c2e00",
-        "900": "#000000"
+        50: "#fcf0cc",
+        100: "#f8e299",
+        200: "#f5d366",
+        300: "#f1c533",
+        400: "#eeb600",
+        500: "#EEB600",
+        600: "#b28800",
+        700: "#775b00",
+        800: "#3c2e00",
+        900: "#000000"
       },
       'primary-contrast': '#ffffff',
       'primary-emphasis': '#2c4da7',

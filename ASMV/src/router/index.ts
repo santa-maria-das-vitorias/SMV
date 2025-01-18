@@ -1,10 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AboutView from '../views/AboutView.vue'
-import ArticlesView from '@/views/ArticlesView.vue'
 
 interface ImportMetaEnv {
   readonly BASE_URL: string;
-  // add other environment variables here
 }
 
 declare global {
@@ -19,23 +16,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/sobre',
       name: 'about',
-      component: AboutView,
+      component: () => import('@/views/AboutView.vue')
     },
     {
-      path:'/Artigos',
-      name: 'article',
-      component:  () => import('../views/ArticlesView.vue'),
-    },
-    {
-      path: '/Artigos/:categoria/:titulo',
+      path: '/:categoria',
       name: 'article-specific',
-      component:  () => import('../views/ArticlesView.vue'),
+      component:  () => import('@/views/Articles/CategoryView.vue'),
       props: true,
+    },
+    {
+      path: '/:categoria/:slug',
+      name: 'SingleArticle',
+      component:  () => import('@/views/Articles/ArticleView.vue'),
+      props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),
     },
   ],
 })
