@@ -16,12 +16,14 @@ const toggleSidebar = () => {
 };
 
 const navLinks = [
+  { label: 'Início', to: '/' },
   { label: 'Sobre', to: '/sobre' },
-  { label: 'Fotos', to: '/fotos' },
+  { label: 'Contato', to: '/Contato' },
   { label: 'Liturgia', to: '/liturgia' },
   { label: 'Artigos', to: '/Artigos' },
   { label: 'Projetos', to: '/Projetos' },
-  { label: 'Contato', to: '/Contato' },
+  { label: 'Suma Teológica', to: '/suma-teologica' },
+  { label: 'Fotos', to: '/fotos' },
 ];
 
 const contactLinks = [

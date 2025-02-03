@@ -14,12 +14,12 @@
     </div>
 
     <!-- Navigation Buttons -->
-    <Button
+    <button
       @click="prevSlide"
       class="absolute top-1/2 left-5 p-2 transform -translate-y-1/2 bg-surface-700 text-white rounded-full flex items-center justify-center"
     >
       <i class="pi pi-chevron-left" />
-    </Button>
+    </button>
     <button
       @click="nextSlide"
       class="absolute top-1/2 right-5 p-2 transform -translate-y-1/2 bg-surface-700 text-white rounded-full flex items-center justify-center"
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import Button from 'primevue/button';
 
 export default {
   props: {

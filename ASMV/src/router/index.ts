@@ -23,15 +23,21 @@ const router = createRouter({
       name: 'about',
       component: () => import('@/views/AboutView.vue')
     },
-    {
-      path: '/contato',
-      name: 'contact',
-      component: () => import('@/views/ContactView.vue')
-    },
+
     {
       path: '/padroeiros',
       name: 'Patrons',
       component: () => import('@/views/PadroeirosView.vue')
+    },
+    {
+      path: '/liturgia',
+      name: 'liturgy',
+      component: () => import('@/views/LiturgiaView.vue')
+    },
+    {
+      path: '/contato',
+      name: 'contact',
+      component: () => import('@/views/ContactView.vue')
     },
     {
       path: '/:categoria',
