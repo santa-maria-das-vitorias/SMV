@@ -157,15 +157,185 @@
         </div>
       </div>
     </div>
+
+    <div class="flex flex-col items-center w-full md:px-10 my-10">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-12 w-full mt-20">
+        <div class="md:col-span-1 card bg-secondary-200 mx-5">
+          <div class="mt-40">
+              <img src="/home/eventos/brasao-papa-francisco.svg" alt="Brasão Papa Francisco" class="w-28 h-28 mx-auto my-auto">
+              <br>
+              <h3 class="text-center text-surface-900 font-light text-3xl mx-7">Ó Roma eterna dos mártires e dos santos, acolhe nossos cantos!</h3>
+          </div>
+        </div>
+
+        <div class="md:col-span-3 card bg-primary-100">
+          <div>
+            <h1 class="text-center font-bold text-4xl">Eventos</h1>
+            <hr class="border-t-2 border-primary-contrast">
+          </div>
+
+          <div class="flex flex-col items-center w-full md:px-4 md:py-10">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-4 w-full mt-10">
+              <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
+                <div>
+                  <img src="/home/eventos/ns-do-rosario.webp" class="rounded-full p-2 aspect-square w-48 h-30 ">
+                  <h2 class="text-center font-bold text-lg tracking-tighter">Rosário Mariano</h2>
+                  <p class="text-center text-base my-5">Venha recitar o Terço Mariano antes da Santa Missa.</p>
+                  
+                </div>
+              </a>
+
+              <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
+                <div >
+                  <img src="/home/eventos/CM.jpeg" class="rounded-full p-2 w-48 h-30">
+                  <h2 class="text-center font-bold text-lg tracking-tighter">Congregação Mariana</h2>
+                  <p class="text-center text-base my-5">Participe da confraria da Congregação Mariana, com reuniões mensais, às 17h dos primeiros sábados do mês.</p>
+                </div>
+              </a>
+              <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
+                <div >
+                  <img src="/home/eventos/congregatio-bonae-mortis.jpg" class="rounded-full p-2 w-48 h-30">
+                  <h2 class="text-center font-bold text-lg tracking-tighter">Confraria da Boa Morte</h2>
+                  <p class="text-center text-base my-5">Participe da confraria da Congregação da Boa Morte, que se reúne às primeiras terças do mês numa missa votiva para pedir a graça de uma boa morte quando o calendário litúrgico permite.</p>
+
+                </div>
+              </a>
+
+              <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
+                <div >
+                  <img src="/home/eventos/santa-ines.webp" class="rounded-full p-2 aspect-square w-48 h-30">
+                  <h2 class="text-center font-bold text-lg tracking-tighter">Pia União das Filhas de Maria</h2>
+                  <p class="text-center text-base my-5">Esta congregação se reúne no dia tal.</p>
+                </div>
+              </a>
+              <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
+                <div class="">
+                  <img src="/home/eventos/catequese.jpg" class="rounded-full p-2 aspect-auto w-48 h-30">
+                  <h2 class="text-center font-bold text-lg tracking-tighter">Catequese Básica a crianças</h2>
+                  <p class="text-center text-base my-5">Esta congregação se reúne no dia tal.</p>
+                </div>
+              </a>
+
+            </div>
+
+          </div>
+       </div>
+
+       <div class="md:col-span-1 card bg-secondary-200 mx-5">
+        <div class="mt-40">
+            <img src="/home/eventos/papa-agatao.png" alt="Fala do Papa Agatão" class="w-28 h-28 mx-auto mt-2">
+            <br>
+            <h3 class="text-center text-surface-900 font-light text-3xl mx-12">Quem reza com herege é herege.</h3>
+            <h3 class="text-center text-surface-900 font-light text-3xl mx-7 italic my-10"> Papa Agatão</h3>
+          </div>
+      </div>
+
+      </div>
+
+      <!-- GALERIA DE FOTOS-->
+      <div class=" bg-secondary-200 flex min-h-[300px] items-center w-full  my-1 card mt-40">
+        <div class="  w-full max-w-4x1 flex items-center justify-center object-cover ">
+          <div class=" m-5 w-full mt-5 flex items-center justify-center max-w-4xl p-4 bg-transparent ">
+            <div class="overflow-hidden relative">
+              <carousel
+                
+                @prevImage = "prevImage"
+                @nextImage = "nextImage"
+              >
+                <Transition :name="transitionName" mode="out-in">
+                  <div :key="slidesPictures[visibleSlide]">
+                    <carousel-slide v-for="(slide, index) in slidesPictures"
+                      :key="slide"
+                      :index="index" 
+                      :visibleSlide = "visibleSlide">
+                      <img :src="slide.slide" alt="slide"
+                      class="w-full min-w-[400px] h-auto object-cover rounded-rounded-border" />
+                      <p class="text-lg font-semibold w-full h-auto object-cover flex items-center justify-center"> {{slide.name}} </p>
+                    </carousel-slide>
+                  </div>
+                </Transition>
+              </carousel>
+            </div>              
+          </div>
+
+         <!-- <div class="bg-secondary-200 m-auto h-auto mt-20 flex items-center justify-center md:col-span-1 card p-4">
+            <div class="overflow-hidden relative">
+              <carousel
+                
+                @prevImage = "prevImage"
+                @nextImage = "nextImage"
+              >
+                <Transition :name="transitionName" mode="out-in">
+                  <div :key="slidesHistory[visibleSlide]">
+                    <carousel-slide v-for="(slide, index) in slidesHistory"
+                      :key="slide"
+                      :index="index" 
+                      :visibleSlide = "visibleSlide">
+                      <img :src="slidesHistory" alt="slide"/>
+                    </carousel-slide>
+                  </div>
+                </Transition>
+              </carousel>
+            </div>
+          </div>  -->
+        </div>  
+    </div>
+    <!--FIM DE GALERIA DE FOTOS-->
+
+
+    
   </div>
+
+  <audio ref="bgMusic" :src="audioSrc" autoplay loop>
+      
+      Seu navegador não suporta áudio.
+    </audio>
+
+
+
+  <!--FIM DE RODAPÉ-->
+
+  </div>
+  <!--RODAPÉ INÍCIO-->
+    
+  <footer class="w-full">
+    <div class=" bg-primary-600 min-h-10 border-t-4 border-t-secondary-500 text-surface-0 flex justify-between items-center px-4 py-2 mt-auto">
+      <div class="w-full container mx-auto px-6 md:px-12">
+        <div class=" w-full flex flex-col md:flex-row justify-between items-center">
+        
+
+          <!-- Botão para iniciar ou pausar a música -->
+          <button @click="toggleMusic" class="bg-blue-500 text-white px-50 py-50 rounded mx-4">
+            {{ isPlaying ? "&#10074; Pausar" : "&#9197; Tocar"	 }}
+          </button>
+       
+        <!-- Links de Navegação -->
+          <nav class="flex space-x-6">
+          <a href="#" class="hover:text-gray-300">Início</a>
+          <a href="#" class="hover:text-gray-300">Sobre</a>
+          <a href="#" class="hover:text-gray-300">Contato</a>
+          </nav>
+
+       
+          <div class="mt-4 md:mt-0">
+          <p class="text-sm mx-2">© {{ new Date().getFullYear() }} Capela Santa Maria das Vitórias. Todos os direitos reservados.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script>
-  import { ref, onMounted, onUnmounted } from "vue";
+  import Carousel from '@/components/Home/carousel.vue';
+  import CarouselSlide from '@/components/Home/carouselSlide.vue';
+  import { ref, computed, onMounted, onUnmounted } from "vue";
   import Slider from "@/components/Home/slider.vue";
   import Avatar from "primevue/avatar";
   import LatestArticles from "@/components/Articles/latestArticles.vue";
   import socialbuttons from "@/components/socialbuttons.vue";
+  
 
   export default {
     components: {
@@ -173,6 +343,8 @@
       LatestArticles,
       socialbuttons,
       Avatar,
+      Carousel,
+      CarouselSlide,
     },
     data() {
       return {
@@ -228,11 +400,98 @@
             link: "/link-card-4"
           }
         ]
+       
+        
       };
     },
+
+    
+
+    
+    
     setup() {
       const stickyElement = ref(null);
       const stickyContainer = ref(null);
+
+      const visibleSlide = ref(0);
+      const transitionDirection = ref('next');
+      const transitionName = computed(() =>{
+        return transitionDirection.value === 'next' ? 'slide-next' : 'slide-prev';
+      });
+
+      const isPlaying = ref(false);
+
+      const audioSrc = "/audio/Laudate-Dominum.mp3";
+
+      const audio = ref(null);
+
+      
+
+      
+
+      // Função para alternar entre play e pause
+    const toggleMusic = () => {
+      // Usando document.querySelector diretamente para verificar se conseguimos acessar o áudio
+      const audioElement = document.querySelector('audio');
+
+      // Verifique se o áudio foi encontrado
+      if (!audioElement) {
+        console.error("Áudio não encontrado!");
+        return;
+      }
+
+      // Alterna o estado de reprodução
+      if (audioElement.paused) {
+        audioElement.play().then(() => {
+          isPlaying.value = true;
+        }).catch((error) => {
+          console.error("Erro ao tentar tocar o áudio:", error);
+        });
+      } else {
+        audioElement.pause();
+        isPlaying.value = false;
+      }
+    };
+
+      // Usamos `onMounted` para garantir que o DOM tenha sido montado antes de tentar acessar o áudio
+          onMounted(() => {
+      const audioElement = document.querySelector('audio');
+      if (!audioElement) {
+        console.error("Áudio não encontrado após o componente ser montado!");
+      }
+    });
+
+      
+
+      const slidesPictures = ref([]);
+      //const slidesHistory = ref([]);
+
+      slidesPictures.value = [
+        {slide:"home/carrossel/batalha-dos-guararapes.jpg", name:"Batalha dos Guararapes"},
+        {slide:"home/carrossel/primeira-missa.jpg", name:"Primeira Missa"},
+        {slide: "home/carrossel/o-grito-do-ipiranga.jpg", name:"O Grito do Ipiranga"},
+      ];
+
+      //slidesHistory.value = []
+
+      
+      const nextImage = () =>{
+        transitionDirection.value = 'next';
+        if(visibleSlide.value >= slidesPictures.value.length - 1){
+          visibleSlide.value = 0;
+        }else{
+          visibleSlide.value ++;
+        };        
+      };
+      const prevImage = () => {
+        transitionDirection.value = 'prev';
+        if(visibleSlide.value <= 0){
+          visibleSlide.value = slidesPictures.value.length - 1;
+        }else{
+          visibleSlide.value --;
+        }
+      };
+
 
       const handleScroll = () => {
         const container = stickyContainer.value;
@@ -259,6 +518,9 @@
         }
       };
 
+
+
+
       onMounted(() => {
         window.addEventListener("scroll", handleScroll);
       });
@@ -270,7 +532,58 @@
       return {
         stickyElement,
         stickyContainer,
+        visibleSlide,
+        nextImage,
+        prevImage,
+        slidesPictures,
+        audioSrc,
+        isPlaying,
+        //slidesHistory,
+        transitionName,
+        toggleMusic,
       };
     },
   };
 </script>
+
+
+<style lang="css" scoped>
+/* Animação para o slide indo para frente */
+.slide-next-enter-active,
+.slide-next-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slide-next-enter,
+.slide-next-leave-to {
+  opacity: 0;
+  transform: translateX(-100%); /* Move o slide atual para a esquerda e o próximo vem da direita */
+}
+
+.slide-next-enter-to,
+.slide-next-leave {
+  opacity: 1;
+  transform: translateX(0); /* O próximo vai para o centro */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Animação para o slide indo para trás */
+.slide-prev-enter-active,
+.slide-prev-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slide-prev-enter,
+.slide-prev-leave-to {
+  opacity: 0;
+  transform: translateX(100%); /* Move o slide atual para a direita e o próximo vem da esquerda */
+}
+
+.slide-prev-enter-to,
+.slide-prev-leave {
+  opacity: 1;
+  transform: translateX(0); /* O próximo vai para o centro */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+</style>
