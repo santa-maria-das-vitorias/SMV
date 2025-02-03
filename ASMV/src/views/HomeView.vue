@@ -245,7 +245,6 @@
 </template>
 
 <script>
-import Carousel from '@/components/Home/carousel.vue';
 import CarouselSlide from '@/components/Home/carouselSlide.vue';
 import { ref, onMounted, onUnmounted } from "vue";
 import Slider from "@/components/Home/slider.vue";
@@ -260,7 +259,6 @@ export default {
     LatestArticles,
     socialbuttons,
     Avatar,
-    Carousel,
     CarouselSlide,
   },
   data() {
