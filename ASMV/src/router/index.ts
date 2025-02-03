@@ -24,6 +24,16 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue')
     },
     {
+      path: '/contato',
+      name: 'contact',
+      component: () => import('@/views/ContactView.vue')
+    },
+    {
+      path: '/padroeiros',
+      name: 'Patrons',
+      component: () => import('@/views/PadroeirosView.vue')
+    },
+    {
       path: '/:categoria',
       name: 'article-specific',
       component:  () => import('@/views/Articles/CategoryView.vue'),

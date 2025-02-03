@@ -91,7 +91,7 @@
     </div>
 
     <div class="bg-secondary-200 min-h-screen mt-40 flex items-center justify-center">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-2 md:p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 p-2 md:p-8">
         <div
           v-for="category in categories"
           :key="category.name"
@@ -106,10 +106,17 @@
           </div>
 
           <div class="w-full md:w-2/3 p-4 flex flex-col">
-            <h2 class="text-lg font-bold text-center py-4">
+            <h1 class="text-lg font-bold text-left ml-2 py-4">
               {{ category.name }}
-            </h2>
+            </h1>
             <LatestArticles :category="category.name" />
+            <hr class="my-4">
+            <router-link
+              :to="`/${category.name.toLowerCase().replace(/ /g, '-')}`"
+              class="btn-primary"
+            >
+              Ver todos os artigos
+            </router-link>
           </div>
         </div>
       </div>
@@ -130,6 +137,25 @@
         <div class="text-center text-surface-600 font-light">{{ homens.date }}</div>
       </div>
 
+    </div>
+
+    <div class="bg-primary-500 min-h-screen mt-40 flex items-center justify-center p-5 md:p-32">
+      <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-6">
+        <div v-for="(card, index) in cards" :key="card.title" class="card grid items-start justify-center">
+          <h1 class="text-lg font-bold text-center">{{ card.title }}</h1>
+          <div class="p-4 flex items-center justify-center">
+            <img :src="card.image" />
+          </div>
+          <div class="p-4 text-center">
+            <p class="font-light">{{ card.description }}</p>
+            <hr class="my-4">
+            <p class="font-light mt-2">{{ card.footer }}</p>
+            <div v-if="index === cards.length - 1" class="mt-4">
+              <router-link to="/contato" class="btn-primary flex items-center justify-center">Leia mais <i class="ml-2 pi pi-arrow-right"></i></router-link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -175,6 +201,33 @@
           { image: "home/homens/d-mayer.png", date: "1904-1991", name: "D. Mayer" },
           { image: "home/homens/d-pestana.png", date: "1928-2011", name: "D. Pestana" },
         ],
+        cards: [
+          {
+            title: "A vocação do Brasil",
+            image: "/home/cards/anchieta.png",
+            description: "“Rei é Cristo, e seu império se estende na terra, nas ondas, no espaço, e de direito inalienável reclama para si as plagas brasílicas. Que teu nome e teu preço e tua glória inefável se espalhe pelo mundo inteiro, ó Cristo, honra dos céus, e a plaga austral ecoe eternamente, Jesus, o teu nome!”",
+            footer: "(De Gestis Mendi de Saa, Beato Pe. Anchieta)",
+          },
+          {
+            title: "Missal romano tradicional",
+            image: "/home/cards/sao-pio-v.png",
+            description: "Se alguém, contudo, tiver a audácia de atentar contra estas disposições (referentes ao missal romano tradicional), saiba que incorrerá na indignação de Deus Todo-Poderoso e de seus bem-aventurados apóstolos Pedro e Paulo.",
+            footer: "São Pio V, Bula Quo Primum Tempore",
+          },
+          {
+            title: "Somos contra o Liberalismo e a Modernidade",
+            image: "/home/cards/pio-ix.png",
+            description: "Proposições condenadas pelo Syllabus de Pio IX: “Efetivamente, é falso que a liberdade civil de qualquer culto, assim como a plena potestade concedida a todos de manifestar aberta e publicamente quaisquer opiniões e pensamentos, conduza mais facilmente à corrupção dos costumes e do espírito dos povos, bem como à propagação da peste do indiferentismo“.",
+            footer: "O Romano Pontífice pode e deve reconciliar-se e transigir com o progresso, com o liberalismo e com a civilização moderna.",
+          },
+          {
+            title: "Compreenda o problema da reforma litúrgica",
+            image: "/home/cards/reforma-liturgica.png",
+            description: "Leia o breve exame crítico da missa nova dos cardeais Ottaviani e Bacci.",
+            footer: "Tendo cuidadosamente examinado e após longa oração e reflexão, os os cardeais Ottaviani e Bacci sentiram-se obrigados perante Deus e a Igreja a apresentar suas considerações.",
+            link: "/link-card-4"
+          }
+        ]
       };
     },
     setup() {
