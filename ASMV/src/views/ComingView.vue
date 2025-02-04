@@ -8,7 +8,7 @@
       <div class="flex flex-col md:flex-row items-center justify-center gap-2">
         <button @click="redirectHome">Voltar ao Início</button>
         <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_ID" target="_blank">
-          <button>Fazer uma Doação</button>
+          <button>Contribua com uma doação</button>
         </a>
       </div>
     </div>

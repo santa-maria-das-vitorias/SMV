@@ -15,8 +15,8 @@
   - [x] Página "Projetos"
   - [x] Página "Suma Teológica"
   - [x] Página "Fotos"
-- Colocar botão "Em breve..." (redirecionar para página de reparo e explicações (vide item 9))
-  - [ ] componente "latestArticles"
+- Colocar mensagem principal de "Em breve..." (redirecionar para página de reparo e explicações (vide item 9))
+  - [x] Componente "latestArticles"
 
 ### Página principal
 - [x] Tocar música Laudate Domine

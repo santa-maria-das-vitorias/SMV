@@ -12,9 +12,17 @@
             </div>
           </div>
         </div>
-        <div class="md:col-span-2 card">
+        <div class="md:col-span-2 card flex flex-col items-center">
           <h1 class="text-center mt-2">Últimos Artigos</h1>
-          <LatestArticles :articles="articles" />
+          <!-- <LatestArticles :articles="articles" /> -->
+          <div class="flex flex-col items-center mt-10 prose card">
+            <h2 class="text-center">Em Construção...</h2>
+            <p>Desde janeiro de 2024 nossa plataforma tem passado por um processo de melhorias e restaurações devido a um ataque hacker.</p>
+
+            <p>Estamos trabalhando arduamente para restaurar a segurança e garantir que a experiência dos nossos leitores e apoiadores seja a melhor possível.</p>
+
+            <p>Pedimos desculpas por qualquer inconveniente e agradecemos sua paciência durante esse período de reestruturação.</p>
+          </div>
         </div>
         
         <div ref="stickyContainer" class="hidden md:block md:col-span-1 h-full relative">
