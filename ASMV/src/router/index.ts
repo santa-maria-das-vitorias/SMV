@@ -76,13 +76,13 @@ const router = createRouter({
     {
       path: '/:categoria',
       name: 'Categoria',
-      component:  () => import('@/views/Articles/CategoryView.vue'),
+      component:  () => import('@/views/ComingView.vue'),
       props: true,
     },
     {
       path: '/:categoria/:slug',
       name: 'Artigo',
-      component:  () => import('@/views/Articles/ArticleView.vue'),
+      component:  () => import('@/views/ComingView.vue'),
       props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),
     },
   ],
