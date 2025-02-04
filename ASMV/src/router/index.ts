@@ -15,39 +15,44 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Início',
       component: () => import('@/views/HomeView.vue')
     },
     {
       path: '/sobre',
-      name: 'about',
+      name: 'Sobre',
       component: () => import('@/views/AboutView.vue')
     },
 
     {
       path: '/padroeiros',
-      name: 'Patrons',
+      name: 'Patronos',
       component: () => import('@/views/PadroeirosView.vue')
     },
     {
       path: '/liturgia',
-      name: 'liturgy',
+      name: 'Liturgia',
       component: () => import('@/views/LiturgiaView.vue')
     },
     {
       path: '/contato',
-      name: 'contact',
+      name: 'Contato',
       component: () => import('@/views/ContactView.vue')
     },
     {
+      path: '/politica-de-privacidade',
+      name: 'Política de Privacidade',
+      component: () => import('@/views/PoliticaView.vue')
+    },
+    {
       path: '/:categoria',
-      name: 'article-specific',
+      name: 'Categoria',
       component:  () => import('@/views/Articles/CategoryView.vue'),
       props: true,
     },
     {
       path: '/:categoria/:slug',
-      name: 'SingleArticle',
+      name: 'Artigo',
       component:  () => import('@/views/Articles/ArticleView.vue'),
       props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),
     },
