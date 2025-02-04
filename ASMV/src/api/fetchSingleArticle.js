@@ -12,7 +12,7 @@ export const fetchSingleArticle = async ({ slug }) => {
     ? null
     : isProduction
       ? `${import.meta.env.VITE_IMAGE_URL}${article.image}`
-      : `/public/upload${article.image}`;
+      : `/upload${article.image}`;
 
   return {
     ...article,

@@ -10,7 +10,7 @@
         <p>
           Nossa associação pretende construir também um centro de cultura católica anexo à capela, onde se cultive a filosofia tomista bem como outras correntes do pensamento católico contra-revolucionário, conforme o magistério perene da Igreja.
         </p>
-        <img src="/public/about/capela.jpg" alt="Quem somos" class="w-full h-auto mt-4 rounded-lg shadow-lg object-cover">
+        <img src="/about/capela.jpg" alt="Quem somos" class="w-full h-auto mt-4 rounded-lg shadow-lg object-cover">
         <h2 class="text-center mt-32">Finalidade da Associação</h2>
         <p class="mt-4">A Associação Civil Santa Maria das Vitórias tem por finalidade:</p>
         <ul>
@@ -22,8 +22,8 @@
           <li>Promover orações e outras celebrações pela santificação dos bispos e prelados de toda a hierarquia católica e suas respectivas Cúrias para que governem o povo de Deus com prudência e sabedoria, inspirados sempre pela graça do Divino Espírito Santo e guiados pelas mãos do Imaculado Coração de Maria, Mãe de Deus e dos homens.</li>
         </ul>
         <div class="flex flex-col md:flex-row gap-4 mt-4">
-          <img src="/public/about/foto-capela.jpg" alt="Finalidade 1" class="w-full md:w-1/2 h-auto rounded-lg shadow-lg object-cover">
-          <img src="/public/about/NossaSenhoraDeLourdes.jpg" alt="Finalidade 2" class="w-full md:w-1/2 h-auto rounded-lg shadow-lg object-cover">
+          <img src="/about/foto-capela.jpg" alt="Finalidade 1" class="w-full md:w-1/2 h-auto rounded-lg shadow-lg object-cover">
+          <img src="/about/NossaSenhoraDeLourdes.jpg" alt="Finalidade 2" class="w-full md:w-1/2 h-auto rounded-lg shadow-lg object-cover">
         </div>
         <a href="/padroeiros" class="no-underline">
           <div class="btn-primary text-center">
