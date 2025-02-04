@@ -45,6 +45,11 @@ const router = createRouter({
       component: () => import('@/views/PoliticaView.vue')
     },
     {
+      path: '/carta-dos-cardeais-ottaviani-e-bacci-contra-a-promulgacao-da-missa-nova',
+      name: 'Carta dos Cardeais Ottaviani e Bacci contra a promulgação da Missa Nova',
+      component: () => import('@/views/CartaView.vue')
+    },
+    {
       path: '/:categoria',
       name: 'Categoria',
       component:  () => import('@/views/Articles/CategoryView.vue'),
@@ -56,6 +61,9 @@ const router = createRouter({
       component:  () => import('@/views/Articles/ArticleView.vue'),
       props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),
     },
+
+
+    
   ],
 })
 

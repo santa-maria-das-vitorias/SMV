@@ -151,7 +151,7 @@
             <hr class="my-4">
             <p class="font-light mt-2">{{ card.footer }}</p>
             <div v-if="index === cards.length - 1" class="mt-4">
-              <router-link to="/contato" class="btn-primary flex items-center justify-center">Leia mais <i class="ml-2 pi pi-arrow-right"></i></router-link>
+              <router-link to="/carta-dos-cardeais-ottaviani-e-bacci-contra-a-promulgacao-da-missa-nova" class="btn-primary flex items-center justify-center">Leia mais <i class="ml-2 pi pi-arrow-right"></i></router-link>
             </div>
           </div>
         </div>

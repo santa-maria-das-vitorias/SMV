@@ -9,7 +9,7 @@
 - [x] Página "Liturgia"
 - [x] Página "Padroeiros"
 - [x] Página "Política e privacidade"
-- [ ] Página "Compreenda o problema da reforma litúrgica"
+- [x] Página "Compreenda o problema da reforma litúrgica"
 - Redirecionar para "Em breve..." (recomenda-se colocar um texto explicativo sobre a restauração)
   - [ ] Página "Artigos"
   - [ ] Página "Projetos"
