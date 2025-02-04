@@ -50,6 +50,30 @@ const router = createRouter({
       component: () => import('@/views/CartaView.vue')
     },
     {
+      path: '/artigos',
+      name: 'Artigos',
+      component:  () => import('@/views/ComingView.vue'),
+      props: true,
+    },
+    {
+      path: '/projetos',
+      name: 'Projetos',
+      component:  () => import('@/views/ComingView.vue'),
+      props: true,
+    },
+    {
+      path: '/suma-teologica',
+      name: 'Suma Teologica',
+      component:  () => import('@/views/ComingView.vue'),
+      props: true,
+    },
+    {
+      path: '/fotos',
+      name: 'Fotos',
+      component:  () => import('@/views/ComingView.vue'),
+      props: true,
+    },
+    {
       path: '/:categoria',
       name: 'Categoria',
       component:  () => import('@/views/Articles/CategoryView.vue'),
@@ -61,10 +85,10 @@ const router = createRouter({
       component:  () => import('@/views/Articles/ArticleView.vue'),
       props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),
     },
-
-
-    
   ],
 })
+
+
+
 
 export default router

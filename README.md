@@ -11,10 +11,10 @@
 - [x] Página "Política e privacidade"
 - [x] Página "Compreenda o problema da reforma litúrgica"
 - Redirecionar para "Em breve..." (recomenda-se colocar um texto explicativo sobre a restauração)
-  - [ ] Página "Artigos"
-  - [ ] Página "Projetos"
-  - [ ] Página "Suma Teológica"
-  - [ ] Página "Fotos"
+  - [x] Página "Artigos"
+  - [x] Página "Projetos"
+  - [x] Página "Suma Teológica"
+  - [x] Página "Fotos"
 - Colocar botão "Em breve..." (redirecionar para página de reparo e explicações (vide item 9))
   - [ ] componente "latestArticles"
 
