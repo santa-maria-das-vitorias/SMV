@@ -6,7 +6,7 @@
       <p>Estamos trabalhando arduamente para restaurar a segurança e garantir que a experiência dos nossos leitores e apoiadores seja a melhor possível.</p>
       <p>Pedimos desculpas por qualquer inconveniente e agradecemos sua paciência durante esse período de reestruturação.</p>
       <div class="flex flex-col md:flex-row items-center justify-center gap-2">
-        <button @click="redirectHome">Voltar ao Início</button>
+        <button @click="redirectHome" class="btn-primary">Voltar ao Início</button>
         <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_ID" target="_blank">
           <button>Contribua com uma doação</button>
         </a>
@@ -24,10 +24,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-/* Estilos personalizados, se necessário */
-button {
-  @apply btn-primary;
-}
-</style>
