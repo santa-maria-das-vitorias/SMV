@@ -22,7 +22,7 @@ const navLinks = [
   { label: 'Liturgia', to: '/liturgia' },
   { label: 'Artigos', to: '/Artigos' },
   { label: 'Projetos', to: '/Projetos' },
-  { label: 'Suma Teológica', to: '/suma-teologica' },
+  { label: 'Suma', to: '/suma-teologica' },
   { label: 'Fotos', to: '/fotos' },
 ];
 

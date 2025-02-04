@@ -39,6 +39,10 @@
   }
 
   .card{
+    @apply bg-surface-0 shadow-lg rounded-lg p-4;
+  }
+
+  .card-padding{
     @apply bg-surface-0 shadow-lg rounded-lg p-4 py-20;
   }
 

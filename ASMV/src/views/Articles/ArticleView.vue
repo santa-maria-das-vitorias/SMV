@@ -11,7 +11,7 @@
           <latestArticles />
         </div>
       </div>
-      <div class="md:col-span-2 card w-full flex flex-col items-center overflow-hidden ">
+      <div class="md:col-span-2 card-padding w-full flex flex-col items-center overflow-hidden ">
         <SingleArticle :slug="$route.params.slug" />
       </div>
       

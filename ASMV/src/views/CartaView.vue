@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mx-auto p-4">
-      <div class="card flex flex-col items-center">
+      <div class="card-padding flex flex-col items-center">
         <div class="prose flex flex-col items-center">
           <h1 class="text-center">Carta dos Cardeais Ottaviani e Bacci contra a promulgação da Missa Nova</h1>
           <p><small><b>Postado em 20-03-2008</b></small></p>

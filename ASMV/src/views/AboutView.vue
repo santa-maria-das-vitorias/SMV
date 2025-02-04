@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto p-4">
-    <div class="card mt-10 flex flex-col items-center">
+    <div class="card-padding mt-10 flex flex-col items-center">
       <div class="prose w-full flex flex-col items-center">
         <h1 class="text-center">Quem somos</h1>
         <p>

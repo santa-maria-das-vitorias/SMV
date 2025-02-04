@@ -6,7 +6,7 @@
         <div class="md:col-span-1 card">
           <h1 class="text-center mt-2">Nossos Padroeiros</h1>
           <div class="flex flex-col items-center mt-10 gap-8">
-            <div v-for="padroeiro in padroeiros" :key="padroeiro.image" class="flex flex-col items-center">
+            <div v-for="padroeiro in padroeiros" :key="padroeiro.image" @click="redirectPadroeiros" class="hover:cursor-pointer hover:scale-105 flex flex-col items-center transition-all">
               <img :src="padroeiro.image" class="w-48 aspect-square rounded-full" />
               <small>{{ padroeiro.name }}</small>
             </div>
@@ -316,6 +316,12 @@ export default {
         }
       ]
     };
+  },
+
+  methods: {
+    redirectPadroeiros() {
+      window.location.href = '/padroeiros';  // Redireciona para a página inicial
+    }
   },
 
   setup() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container mx-auto p-4">
-      <div class="card flex flex-col items-center">
+      <div class="card-padding flex flex-col items-center">
         <div class="prose flex flex-col items-center">
           <h1 class="text-center mt-2">Política de Privacidade</h1>
           <p>Última Atualização: 03/02/2025</p>
