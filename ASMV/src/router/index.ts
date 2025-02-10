@@ -23,7 +23,6 @@ const router = createRouter({
       name: 'Sobre',
       component: () => import('@/views/AboutView.vue')
     },
-
     {
       path: '/padroeiros',
       name: 'Patronos',
@@ -76,19 +75,16 @@ const router = createRouter({
     {
       path: '/:categoria',
       name: 'Categoria',
-      component:  () => import('@/views/ComingView.vue'),
+      component:  () => import('@/views/Articles/CategoryView.vue'),
       props: true,
     },
     {
       path: '/:categoria/:slug',
       name: 'Artigo',
-      component:  () => import('@/views/ComingView.vue'),
+      component:  () => import('@/views/Articles/ArticleView.vue'),
       props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),
     },
   ],
 })
-
-
-
 
 export default router

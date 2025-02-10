@@ -16,9 +16,14 @@
       </div>
       
       <div ref="stickyContainer" class="hidden md:block md:col-span-1 h-full relative">
-        <div ref="stickyElement" class="flex flex-col items-center gap-5 card ">
-          <h1 class="text-center mt-2 mb-5">Compartilhe</h1>
-          <Sharebuttons />
+        <div ref="stickyElement" >
+          <div class="flex flex-col items-center gap-5 card ">
+            <h1 class="text-center mt-2 mb-5">Compartilhe</h1>
+            <ShareButtons />
+          </div>
+          <div ref="stickyElement" class="flex flex-col items-center gap-5 card mt-5">
+            <ReactionsButtons :articleSlug="$route.params.slug" />
+          </div>
         </div>
       </div>
     </div>
@@ -30,14 +35,16 @@
   import allCategories from "@/components/Articles/allCategories.vue";
   import latestArticles from "@/components/Articles/latestArticles.vue";
   import SingleArticle from "@/components/Articles/singleArticle.vue";
-  import Sharebuttons from "@/components/Articles/sharebuttons.vue";
+  import ShareButtons from "@/components/Articles/sharebuttons.vue";
+  import ReactionsButtons from "@/components/Articles/reactionsButtons.vue";
 
   export default {
     components: {
       latestArticles,
       SingleArticle,
       allCategories,
-      Sharebuttons
+      ShareButtons,
+      ReactionsButtons
     },
     props: {
       categoria: {
