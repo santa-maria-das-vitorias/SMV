@@ -1,47 +1,65 @@
-# Workitems
+## Versão usuário - Leitor
 
-## Release 0.x
-- [x] botão de compartilhamento
-- [x] Imagem principal
-- [x] Footer
-- [x] Página "Sobre"
-- [x] Página "Contato"
-- [x] Página "Liturgia"
-- [x] Página "Padroeiros"
-- [x] Página "Política e privacidade"
-- [x] Página "Compreenda o problema da reforma litúrgica"
-- Redirecionar para "Em breve..." (recomenda-se colocar um texto explicativo sobre a restauração)
-  - [x] Página "Artigos"
-  - [x] Página "Projetos"
-  - [x] Página "Suma Teológica"
-  - [x] Página "Fotos"
-- Colocar mensagem principal de "Em breve..." (redirecionar para página de reparo e explicações (vide item 9))
-  - [x] Componente "latestArticles"
+### **1. Camada de Front-end**  
+- Responsável por renderizar a interface do usuário.  
+- Implementa regras de segurança e controle de acesso.  
+- Protege contra ataques XSS e CSRF.  
+- **Nenhuma lógica ou credencial do backend é exposta ao usuário, garantindo maior segurança e controle.**
 
-### Página principal
-- [x] Tocar música Laudate Domine
-- Carrossel
-  - [x] criar componente
-  - [ ] Colocar fotos históricas
-- Eventos
-  - [ ] Arrumar responsividade para telas médias
-  - [ ] Tirar o link
-  - [ ] Arrumar textos
-- [ ] Bullet no canto inferior esquerdo com icone do paypal e link
-- [ ] Trocar "Projetos" para "Eventos" na navbar
-  - Será futuramente uma categoria especial de artigos
-  - por enquanto apenas redireciona para o id "eventos" da página inicial
+### **2. Camada de Backend**  
+- Intermedia todas as comunicações entre o frontend e os bancos de dados.  
+- Implementa regras de segurança e controle de acesso.  
+- Gerencia o fallback entre os bancos.
 
-### FOTOS
-1. Foto frontal externa da Capela
-2. Foto frontal externa lateral da Capela
-3. Foto do interior
-4. Foto da Gruta
+### **3. Banco de Dados Primário (Somente Leitura)**  
+- Armazena artigos e categorias.  
+- Extremamente seguro, apenas permite consultas (nenhuma escrita direta).  
 
-## Release 1.x
-1. contagem de visitas do artigo
-2. Reações (apenas positivas)
-3. Categorias
+### **4. Banco de Dados de Interações**  
+- Armazena reações (curtidas, amei, etc.) e visualizações de posts.  
+- **Visualizações**: Limitadas por IP e um intervalo mínimo de 1 hora.  
+- **Reações**: Controladas por IP e possivelmente por fingerprint do navegador para evitar spam - além de uma limitação por timeout no front-end.  
 
-## Release 2.x
-1. Especificar campo de "Conheça o Autor" na página de Conteúdo
+---
+
+## Estrutura dos Bancos de Dados
+
+### Tabela: `categories`
+| Coluna      | Tipo         | Descrição                            |
+|-------------|--------------|--------------------------------------|
+| id          | INT          | Identificador único da categoria     |
+| slug        | VARCHAR(255) | Slug da categoria                    |
+| title       | VARCHAR(255) | Título da categoria                  |
+
+### Tabela: `articles`
+| Coluna      | Tipo         | Descrição                            |
+|-------------|--------------|--------------------------------------|
+| id          | INT          | Identificador único do artigo        |
+| title       | VARCHAR(255) | Título do artigo                     |
+| slug        | VARCHAR(255) | Slug do artigo                       |
+| date        | DATETIME     | Data de publicação do artigo         |
+| image       | VARCHAR(255) | URL da imagem do artigo              |
+| author      | VARCHAR(255) | Autor do artigo                      |
+| category_id | INT          | Identificador da categoria           |
+
+### Tabela: `reactions`
+| Coluna      | Tipo         | Descrição                            |
+|-------------|--------------|--------------------------------------|
+| id          | INT          | Identificador único da reação        |
+| article_id  | INT          | Identificador do artigo              |
+| type        | VARCHAR(50)  | Tipo de reação (curtida, amei, etc.) |
+| ip_address  | VARCHAR(50)  | Endereço IP do usuário               |
+| timestamp   | DATETIME     | Data e hora da reação                |
+
+### Tabela: `views`
+| Coluna      | Tipo         | Descrição                            |
+|-------------|--------------|--------------------------------------|
+| id          | INT          | Identificador único da visualização  |
+| article_id  | INT          | Identificador do artigo              |
+| ip_address  | VARCHAR(50)  | Endereço IP do usuário               |
+| timestamp   | DATETIME     | Data e hora da visualização          |
+
+### Relacionamentos
+- Cada artigo pertence a uma categoria (`articles.category_id` -> `categories.id`)
+- Cada reação está associada a um artigo (`reactions.article_id` -> `articles.id`)
+- Cada visualização está associada a um artigo (`views.article_id` -> `articles.id`)
