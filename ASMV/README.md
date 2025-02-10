@@ -33,11 +33,15 @@
   - por enquanto apenas redireciona para o id "eventos" da página inicial
 
 ## Release 1.x
-- [x] Contagem de visitas do artigo
-- [x] Reações (apenas positivas)
-- [x] Página de Categorias
-- [x] Especificação da estrutura do Back-end
-- [x] Especificação da estrutura do Banco de Dados
+- **develop**
+  - [x] Contagem de visitas do artigo
+  - [x] Reações (apenas positivas)
+  - [x] Página de Categorias
+  - [x] Especificação da estrutura do Back-end
+  - [x] Especificação da estrutura do Banco de Dados
+- **main**
+  - [ ] Configurar botão de doações com link paypal
+  - [ ] Redirecionar DNS para solução vercel
 
 ## Release 2.x
 1. Especificar campo de "Conheça o Autor" na página de Conteúdo
