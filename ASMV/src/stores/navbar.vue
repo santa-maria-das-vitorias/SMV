@@ -21,7 +21,7 @@ const navLinks = [
   { label: 'Contato', to: '/Contato' },
   { label: 'Liturgia', to: '/liturgia' },
   { label: 'Artigos', to: '/Artigos' },
-  { label: 'Projetos', to: '/Projetos' },
+  { label: 'Eventos', to: '/Projetos' },
   { label: 'Suma', to: '/suma-teologica' },
   { label: 'Fotos', to: '/fotos' },
 ];
