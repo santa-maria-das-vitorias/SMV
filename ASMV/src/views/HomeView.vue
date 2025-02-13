@@ -222,31 +222,11 @@
     </div>
 
     </div>
-    <audio ref="bgMusic" :src="audioSrc" autoplay loop>
-      Seu navegador não suporta áudio.
-    </audio>
 
     <div class="">
       <CarouselSlide />
     </div>
   </div>
-
-
-  <div class="fixed bottom-4 right-4 flex flex-col-reverse items-center gap-2">
-    <button @click="toggleMusic" class=" text-xs bg-primary-800 text-white p-2 rounded-full aspect-square h-10 items-center justify-center flex hover:bg-primary-500">
-      <i :class="isPlaying ? 'pi pi-pause' : 'pi pi-play'"></i>
-    </button>
-
-    <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_ID" target="_blank">
-      <button class="bg-primary-800 text-white p-2 rounded-full h-10 items-center aspect-square justify-center flex hover:bg-primary-500 group transition">
-        <i class="group-hover:hidden text-bold text-lg pi pi-paypal"></i>
-        <span class="hidden group-hover:inline text-xs">Doe agora!</span>
-      </button>
-    </a>
-
-  </div>
-  
-
 </template>
 
 <script>
@@ -256,7 +236,7 @@ import Slider from "@/components/Home/slider.vue";
 import Avatar from "primevue/avatar";
 import LatestArticles from "@/components/Articles/latestArticles.vue";
 import socialbuttons from "@/components/socialbuttons.vue";
-
+import { handleScroll } from "@/utils/handleScroll";
 
 export default {
   components: {
@@ -269,7 +249,7 @@ export default {
   data() {
     return {
       hideButtonLeft: false,
-      hideButtonRight:false,
+      hideButtonRight: false,
       sliderImages: [
         "home/slider/1.jpg",
         "home/slider/2.jpg",
@@ -388,7 +368,6 @@ export default {
         this.hideButtonRight = true;}
     },
 
-    
     scrollLeft() {
       this.$refs.carousel.scrollBy({ left: -300, behavior: "smooth" });
     },
@@ -396,80 +375,22 @@ export default {
       this.$refs.carousel.scrollBy({ left: 300, behavior: "smooth" });
     },
   },
-  
 
   setup() {
     const stickyElement = ref(null);
     const stickyContainer = ref(null);
 
-    const isPlaying = ref(false);
-
-    const audioSrc = "/audio/Laudate-Dominum.mp3";
-
-    // Função para alternar entre play e pause
-    const toggleMusic = () => {
-      const audioElement = document.querySelector('audio');
-      if (!audioElement) {
-        console.error("Áudio não encontrado!");
-        return;
-      }
-      if (audioElement.paused) {
-        audioElement.play().then(() => {
-          isPlaying.value = true;
-        }).catch((error) => {
-          console.error("Erro ao tentar tocar o áudio:", error);
-        });
-      } else {
-        audioElement.pause();
-        isPlaying.value = false;
-      }
-    };
-
     onMounted(() => {
-      const audioElement = document.querySelector('audio');
-      if (!audioElement) {
-        console.error("Áudio não encontrado após o componente ser montado!");
-      }
-    });
-
-    const handleScroll = () => {
-      const container = stickyContainer.value;
-      const sticky = stickyElement.value;
-
-      const containerRect = container.getBoundingClientRect();
-      const stickyRect = sticky.getBoundingClientRect();
-
-      sticky.style.width = `${containerRect.width}px`;
-
-      if (containerRect.top <= 0 && containerRect.bottom > stickyRect.height) {
-        sticky.style.position = "fixed";
-        sticky.style.top = "5rem";
-        sticky.style.bottom = "unset";
-      } else if (containerRect.bottom <= stickyRect.height) {
-        sticky.style.position = "absolute";
-        sticky.style.top = "unset";
-        sticky.style.bottom = "0";
-      } else {
-        sticky.style.position = "relative";
-        sticky.style.top = "unset";
-        sticky.style.bottom = "unset";
-        sticky.style.width = "unset";
-      }
-    };
-    onMounted(() => {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", () => handleScroll(stickyContainer, stickyElement));
     });
 
     onUnmounted(() => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", () => handleScroll(stickyContainer, stickyElement));
     });
 
     return {
       stickyElement,
       stickyContainer,
-      audioSrc,
-      isPlaying,
-      toggleMusic,
     };
   },
 };

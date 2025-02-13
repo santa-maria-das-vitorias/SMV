@@ -31,6 +31,7 @@
   import latestArticles from "@/components/Articles/latestArticles.vue";
   import SingleArticle from "@/components/Articles/singleArticle.vue";
   import Sharebuttons from "@/components/Articles/sharebuttons.vue";
+  import { handleScroll } from "@/utils/handleScroll.js";
 
   export default {
     components: {
@@ -49,37 +50,12 @@
       const stickyElement = ref(null);
       const stickyContainer = ref(null);
 
-      const handleScroll = () => {
-        const container = stickyContainer.value;
-        const sticky = stickyElement.value;
-
-        const containerRect = container.getBoundingClientRect();
-        const stickyRect = sticky.getBoundingClientRect();
-
-        sticky.style.width = `${containerRect.width}px`;
-
-        if (containerRect.top <= 0 && containerRect.bottom > stickyRect.height) {
-          sticky.style.position = "fixed";
-          sticky.style.top = "5rem";
-          sticky.style.bottom = "unset";
-        } else if (containerRect.bottom <= stickyRect.height) {
-          sticky.style.position = "absolute";
-          sticky.style.top = "unset";
-          sticky.style.bottom = "0";
-        } else {
-          sticky.style.position = "relative";
-          sticky.style.top = "unset";
-          sticky.style.bottom = "unset";
-          sticky.style.width = "unset";
-        }
-      };
-
       onMounted(() => {
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", () => handleScroll(stickyContainer, stickyElement));
       });
 
       onUnmounted(() => {
-        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("scroll", () => handleScroll(stickyContainer, stickyElement));
       });
 
       return {

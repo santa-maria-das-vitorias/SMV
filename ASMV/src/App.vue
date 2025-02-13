@@ -10,7 +10,7 @@ import Footer from './stores/footer.vue';
     <!-- Page Content -->
     <RouterView />
     <!-- End Content -->
-    <Footer class="mt-auto" />
+    <Footer />
   </div>
   
 </template>
