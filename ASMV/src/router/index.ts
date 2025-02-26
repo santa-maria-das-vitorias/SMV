@@ -51,7 +51,7 @@ const router = createRouter({
     {
       path: '/artigos',
       name: 'Artigos',
-      component:  () => import('@/views/ComingView.vue'),
+      component:  () => import('@/views/Articles/Index.vue'),
       props: true,
     },
     {
@@ -73,13 +73,13 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/:categoria',
+      path: '/artigos/:categoria',
       name: 'Categoria',
       component:  () => import('@/views/Articles/CategoryView.vue'),
       props: true,
     },
     {
-      path: '/:categoria/:slug',
+      path: '/artigos/:categoria/:slug',
       name: 'Artigo',
       component:  () => import('@/views/Articles/ArticleView.vue'),
       props: route => ({ categoria: route.params.categoria, slug: route.params.slug }),

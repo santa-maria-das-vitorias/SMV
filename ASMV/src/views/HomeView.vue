@@ -112,7 +112,7 @@
             <LatestArticles :category="category.name" />
             <hr class="my-4">
             <router-link
-              :to="`/${category.name.toLowerCase().replace(/ /g, '-')}`"
+              :to="`/artigos/${category.name.toLowerCase().replace(/ /g, '-')}`"
               class="btn-primary"
             >
               Ver todos os artigos

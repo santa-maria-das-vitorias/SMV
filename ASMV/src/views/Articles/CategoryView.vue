@@ -4,12 +4,13 @@
 
       <div class="hidden md:flex flex-col gap-10">
         <div class="flex flex-col items-center gap-5 card">
-          <h1 class="text-center mt-2 mb-5">Categorias de Artigo</h1>
+          <h1 class="text-center mt-2 mb-5">Categorias de Artigos</h1>
           <allCategories />
         </div>
       </div>
 
-      <div class="md:col-span-2 card-padding w-full flex flex-col items-center overflow-hidden ">
+      <div class="md:col-span-2 card w-full flex flex-col items-center overflow-hidden ">
+        <h2 class="text-3xl font-bold mb-10">{{ getCategoryTitle($route.params.categoria) }}</h2>
         <SingleCategory :categorySlug="$route.params.categoria" />
       </div>
       
@@ -24,9 +25,11 @@
 </template>
 
 <script>
-import SingleCategory from "@/components/Articles/singleCategory.vue";
+import SingleCategory from "@/components/Articles/articlePerCategory.vue";
 import allCategories from "@/components/Articles/allCategories.vue";
 import latestArticles from "@/components/Articles/latestArticles.vue";
+import { fetchAllCategories } from '@/api/fetchAllCategories';
+
 
 export default {
   components: {
@@ -34,8 +37,27 @@ export default {
     latestArticles,
     allCategories
   },
-  created() {
-    console.log('Slug from route:', this.$route.params.slug);
-  }
+  data() {
+    return {
+      categories: [],
+    };
+  },
+  mounted() {
+    this.loadCategories();
+  },
+  methods: {
+    async loadCategories() {
+      try {
+        const categories = await fetchAllCategories();
+        this.categories = categories;
+      } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    },
+    getCategoryTitle(slug) {
+      const category = this.categories.find((category) => category.slug === slug);
+      return category ? category.title : '';
+    },
+  },
 };
 </script>

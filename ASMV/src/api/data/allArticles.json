@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Os fundamentos da defesa da fé cristã",
+    "slug": "os-fundamentos-da-defesa-da-fe-crista",
+    "category": "Apologética",
+    "category-slug": "apologetica",
+    "date": "2023-11-01T10:00:00Z",
+    "image": "/minha-imagem-teste-post.jpg",
+    "author": "Pe. João Batista de A. Prado Ferraz Costa"
+  },
+  {
+    "id": 2,
+    "title": "Os fundamentos da defesa da fé cristã 2",
+    "slug": "os-fundamentos-da-defesa-da-fe-crista",
+    "category": "Apologética",
+    "category-slug": "apologetica",
+    "date": "2023-12-01T10:00:00Z",
+    "image": "/minha-imagem-teste-post.jpg",
+    "author": "Pe. João Batista de A. Prado Ferraz Costa"
+  },
+  {
+    "id": 3,
+    "title": "Os fundamentos da defesa da fé cristã 3",
+    "slug": "os-fundamentos-da-defesa-da-fe-crista",
+    "category": "Apologética",
+    "category-slug": "apologetica",
+    "date": "2023-10-01T10:00:00Z",
+    "image": "",
+    "author": "Pe. João Batista de A. Prado Ferraz Costa"
+  }
+]

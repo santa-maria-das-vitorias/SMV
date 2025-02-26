@@ -151,8 +151,6 @@ onUnmounted(() => {
           />
         </div>
         <div class="flex items-center gap-4 text-white">
-          <Button as="router-link" icon="pi pi-map-marker" to="/localizacao" />
-          <Button as="router-link" icon="pi pi-envelope" to="/contato" />
           <Button
             icon="pi pi-bars"
             class="block md:hidden"
