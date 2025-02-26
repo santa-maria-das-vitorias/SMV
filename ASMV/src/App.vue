@@ -8,7 +8,7 @@ import Footer from './stores/footer.vue';
   <div class="min-h-screen flex flex-col">
     <Navbar />
     <RouterView />
-    <Footer class="mt-auto" />
+    <Footer />
   </div>
   
 </template>

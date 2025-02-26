@@ -158,90 +158,67 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-12 w-full mt-20">
-      <div class="md:col-span-1 card bg-secondary-200 mx-5">
-        <div class="mt-40">
-            <img src="/home/eventos/brasao-papa-francisco.svg" alt="Brasão Papa Francisco" class="w-28 h-28 mx-auto my-auto">
+    <div class="grid justify-center grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-5 xl:gap-12 gap-4 md:gap-0 md:px-10 lg:gap-0 lg:px-10 w-full mt-20 ">
+      <div class="md:col-span-1 card bg-secondary-200 mx-5 md:my-5 lg:my-10 xl:my-0">
+        <div class="my-40">
+            <img src="/home/eventos/brasao-papa-francisco.svg" alt="Brasão Papa Francisco" class="w-32 h-32 md:w-32 md:h-32 lg:w-24 lg:h-24 mx-auto my-auto">
             <br>
-            <h3 class="text-center text-surface-900 font-light text-3xl mx-7">Ó Roma eterna dos mártires e dos santos, acolhe nossos cantos!</h3>
+            <h3 class="text-center text-surface-900 font-semibold text-3xl sm:text-2x1 md:text-xl mx-12 sm:mx-0">Ó Roma eterna dos mártires e dos santos, acolhe nossos cantos!</h3>
         </div>
       </div>
 
-      <div class="md:col-span-3 card bg-primary-100">
+      <div class="md:col-span-3 card bg-primary-100 my-20 sm:my-20 md:my-0">
         <div>
           <h1 class="text-center font-bold text-4xl">Eventos</h1>
           <hr class="border-t-2 border-primary-contrast">
         </div>
 
-        <div class="flex flex-col items-center w-full md:px-4 md:py-10">
-          <div class="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-4 w-full mt-10">
-            <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
-              <div>
-                <img src="/home/eventos/ns-do-rosario.webp" class="rounded-full p-2 aspect-square w-48 h-30 ">
-                <h2 class="text-center font-bold text-lg tracking-tighter">Rosário Mariano</h2>
-                <p class="text-center text-base my-5">Venha recitar o Terço Mariano antes da Santa Missa.</p>
-                
+        <div ref="listCOntainer" class="flex flex-col items-center w-full md:px-4 md:py-10" @scroll="handleScroll2">
+          <div class="relative w-full max-w-5xl">
+            <!-- Botão Esquerdo -->
+            <button @click="scrollLeft" v-show="!hideButtonLeft"
+              class="absolute left-0 top-1/2 -translate-y-1/2 p-2 bg-white shadow-md rounded-full z-10">
+              ◀
+            </button>
+
+            <!-- Carrossel -->
+            <div ref="carousel"
+              class="flex overflow-x-hidden scroll-smooth space-x-4 p-5">
+              <div v-for="evento in events" :key="evento.id" 
+                class="flex-none w-64 bg-primary-50 rounded-lg p-4 shadow-md transform hover:scale-105 transition duration-300"
+                >
+                <div class="flex flex-col items-center">
+                  <img :src="evento.image" class="rounded-full p-2 aspect-square w-48">
+                  <h2 class="text-center font-bold text-lg tracking-tighter">{{ evento.title }}</h2>
+                  <p class="text-center text-base my-5">{{ evento.description }}</p>
+                </div>
               </div>
-            </a>
+            </div>
 
-            <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
-              <div >
-                <img src="/home/eventos/CM.jpeg" class="rounded-full p-2 w-48 h-30">
-                <h2 class="text-center font-bold text-lg tracking-tighter">Congregação Mariana</h2>
-                <p class="text-center text-base my-5">Participe da confraria da Congregação Mariana, com reuniões mensais, às 17h dos primeiros sábados do mês.</p>
-              </div>
-            </a>
-            <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
-              <div >
-                <img src="/home/eventos/congregatio-bonae-mortis.jpg" class="rounded-full p-2 w-48 h-30">
-                <h2 class="text-center font-bold text-lg tracking-tighter">Confraria da Boa Morte</h2>
-                <p class="text-center text-base my-5">Participe da confraria da Congregação da Boa Morte, que se reúne às primeiras terças do mês numa missa votiva para pedir a graça de uma boa morte quando o calendário litúrgico permite.</p>
+            <!-- Botão Direito -->
+            <button @click="scrollRight" v-show="!hideButtonRight"
+              class="absolute right-0 top-1/2 -translate-y-1/2 p-2 bg-white shadow-md rounded-full z-10">
+              ▶
+            </button>
+           </div>
+        </div>                
+      </div>
 
-              </div>
-            </a>
-
-            <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
-              <div >
-                <img src="/home/eventos/santa-ines.webp" class="rounded-full p-2 aspect-square w-48 h-30">
-                <h2 class="text-center font-bold text-lg tracking-tighter">Pia União das Filhas de Maria</h2>
-                <p class="text-center text-base my-5">Esta congregação se reúne no dia tal.</p>
-              </div>
-            </a>
-            <a href="/#" class="md:col-span-1 card bg-primary-50 transform hover:scale-105 transition duration-300 ">
-              <div class="">
-                <img src="/home/eventos/catequese.jpg" class="rounded-full p-2 aspect-auto w-48 h-30">
-                <h2 class="text-center font-bold text-lg tracking-tighter">Catequese Básica a crianças</h2>
-                <p class="text-center text-base my-5">Esta congregação se reúne no dia tal.</p>
-              </div>
-            </a>
-
-          </div>
-
-        </div>
-    </div>
-
-    <div class="md:col-span-1 card bg-secondary-200 mx-5">
-      <div class="mt-40">
-          <img src="/home/eventos/papa-agatao.png" alt="Fala do Papa Agatão" class="w-28 h-28 mx-auto mt-2">
+    <div class="md:col-span-1 card bg-secondary-200 mx-5 md:my-5 lg:my-5 xl:my-0">
+      <div class="my-40">
+          <img src="/home/eventos/papa-agatao.png" alt="Fala do Papa Agatão" class="w-32 h-32 md:w-32 md:h-32 lg:w-24 lg:h-24 mx-auto my-auto">
           <br>
-          <h3 class="text-center text-surface-900 font-light text-3xl mx-12">Quem reza com herege é herege.</h3>
-          <h3 class="text-center text-surface-900 font-light text-3xl mx-7 italic my-10"> Papa Agatão</h3>
+          <h3 class="text-center text-surface-900 font-semibold text-3xl sm:text-2x1 md:text-xl mx-12 sm:mx-0">Quem reza com herege é herege.</h3>
+          <h3 class="text-center text-surface-900 font-light text-3xl sm:text-xl md:text-x1 mx-7 sm:mx-0 italic my-10"> Papa Agatão</h3>
         </div>
     </div>
 
     </div>
-    <audio ref="bgMusic" :src="audioSrc" autoplay loop>
-      Seu navegador não suporta áudio.
-    </audio>
 
     <div class="">
       <CarouselSlide />
     </div>
   </div>
-
-  <button @click="toggleMusic" class="fixed bottom-4 right-4 bg-primary-800 text-white p-2 rounded-full aspect-square h-10 items-center justify-center flex">
-    <i :class="isPlaying ? 'pi pi-pause' : 'pi pi-play'"></i>
-  </button>
 </template>
 
 <script>
@@ -251,7 +228,7 @@ import Slider from "@/components/Home/slider.vue";
 import Avatar from "primevue/avatar";
 import LatestArticles from "@/components/Articles/latestArticles.vue";
 import socialbuttons from "@/components/socialbuttons.vue";
-
+import { handleScroll } from "@/utils/handleScroll";
 
 export default {
   components: {
@@ -263,6 +240,8 @@ export default {
   },
   data() {
     return {
+      hideButtonLeft: false,
+      hideButtonRight: false,
       sliderImages: [
         "home/slider/1.jpg",
         "home/slider/2.jpg",
@@ -314,6 +293,50 @@ export default {
           footer: "Tendo cuidadosamente examinado e após longa oração e reflexão, os os cardeais Ottaviani e Bacci sentiram-se obrigados perante Deus e a Igreja a apresentar suas considerações.",
           link: "/link-card-4"
         }
+      ],
+      events: [
+        {
+          title: "Rosário Mariano",
+          image: "/home/eventos/ns-do-rosario.webp",
+          name: "Nossa Senhora do Rosário",
+          description: "Logo antes de cada missa diária os fiéis se reúnem com o padre na capela para recitar o Santo Terço Mariano."
+        },
+        {
+          title: "Congregação Mariana",
+          image: "/home/eventos/CM.jpeg",
+          
+          description: "Congrega rapazes católicos que desejam ser católicos mais perfeitos e filhos mais devotos de Nossa Senhora. Reúnem-se uma vez por mês para formações com o padre diretor e outras devoções piedosas.",
+        },
+        {
+          title: "Confraria da Boa Morte",
+          image: "/home/eventos/congregatio-bonae-mortis.jpg",
+          
+          description: "Esta confraria se reúne às primeiras terças de cada mês, quando o calendário permite, para assistência na missa votiva pela graça de uma boa morte.",
+        },
+        {
+          title: "Pia União das Filhas de Maria",
+          image: "/home/eventos/santa-ines.webp",
+          name: "Santa Inês, Virgem e Mártir",
+          description: "A Pia União das Filhas de Maria congrega moças católicas que desejam crescer na fé, na devoção a Nossa Senhora. Reúnem-se uma vez por mês para rezar, estudar a doutrina católica, sob a orientação do padre diretor.",
+        },
+        {
+          title: "Catequese Básica",
+          image: "/home/eventos/catequese.jpg",
+          name: "São Francisco Xavier, Confessor",
+          description: "Semanalmenteo padre dá uma aula de catequese básica a crianças aos sábados, bem como às quartas após a santa missa aos fiéis.",
+        },
+        {
+          title: "Apostolado São Lucas",
+          image: "/home/eventos/sao-lucas.jpg",
+          name: "São Lucas Evangelista",
+          description: "Sob os auspícios do grande médico de homens e de almas, os interessados se beneficiam com a caridade de médicos que atendem gratuitamente na capela quando há possibilidade.",
+        },
+        {
+          title: "Apostolado Santa Zita",
+          image: "/home/eventos/santa-zita.jpg",
+          name: "Santa Zita, Virgem",
+          description: "Aos primeiros sábados de cada mês o apostolado Santa Zita reúne-se no mesmo espírito da padroeira para realizar a limpeza da casa de Deus.",
+        },
       ]
     };
   },
@@ -321,81 +344,45 @@ export default {
   methods: {
     redirectPadroeiros() {
       window.location.href = '/padroeiros';  // Redireciona para a página inicial
-    }
+    },
+
+    handleScroll2(){
+      const listContainer = this.$refs.listContainer;
+      const listHeight = listContainer.scrollHeight;      
+      const scrollPosition = listContainer.scrollTop + listContainer.clientHeight;
+
+      // Se o usuário chegou ao fim da lista (com uma margem de 50px)
+      if (scrollPosition >= listHeight - 50) {
+        this.hideButtonLeft = true;
+        this.hideButtonRight = false;
+      } else {
+        this.hideButtonLeft = false;
+        this.hideButtonRight = true;}
+    },
+
+    scrollLeft() {
+      this.$refs.carousel.scrollBy({ left: -300, behavior: "smooth" });
+    },
+    scrollRight() {
+      this.$refs.carousel.scrollBy({ left: 300, behavior: "smooth" });
+    },
   },
 
   setup() {
     const stickyElement = ref(null);
     const stickyContainer = ref(null);
 
-    const isPlaying = ref(false);
-
-    const audioSrc = "/audio/Laudate-Dominum.mp3";
-
-    // Função para alternar entre play e pause
-    const toggleMusic = () => {
-      const audioElement = document.querySelector('audio');
-      if (!audioElement) {
-        console.error("Áudio não encontrado!");
-        return;
-      }
-      if (audioElement.paused) {
-        audioElement.play().then(() => {
-          isPlaying.value = true;
-        }).catch((error) => {
-          console.error("Erro ao tentar tocar o áudio:", error);
-        });
-      } else {
-        audioElement.pause();
-        isPlaying.value = false;
-      }
-    };
-
     onMounted(() => {
-      const audioElement = document.querySelector('audio');
-      if (!audioElement) {
-        console.error("Áudio não encontrado após o componente ser montado!");
-      }
-    });
-
-    const handleScroll = () => {
-      const container = stickyContainer.value;
-      const sticky = stickyElement.value;
-
-      const containerRect = container.getBoundingClientRect();
-      const stickyRect = sticky.getBoundingClientRect();
-
-      sticky.style.width = `${containerRect.width}px`;
-
-      if (containerRect.top <= 0 && containerRect.bottom > stickyRect.height) {
-        sticky.style.position = "fixed";
-        sticky.style.top = "5rem";
-        sticky.style.bottom = "unset";
-      } else if (containerRect.bottom <= stickyRect.height) {
-        sticky.style.position = "absolute";
-        sticky.style.top = "unset";
-        sticky.style.bottom = "0";
-      } else {
-        sticky.style.position = "relative";
-        sticky.style.top = "unset";
-        sticky.style.bottom = "unset";
-        sticky.style.width = "unset";
-      }
-    };
-    onMounted(() => {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", () => handleScroll(stickyContainer, stickyElement));
     });
 
     onUnmounted(() => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", () => handleScroll(stickyContainer, stickyElement));
     });
 
     return {
       stickyElement,
       stickyContainer,
-      audioSrc,
-      isPlaying,
-      toggleMusic,
     };
   },
 };

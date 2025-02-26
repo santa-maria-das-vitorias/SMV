@@ -93,4 +93,5 @@ export const theme = {
 };
 export const plugins = [
   prose,
+  //require('tailwind-scrollbar'),
 ];
