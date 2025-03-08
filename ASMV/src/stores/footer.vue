@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
@@ -60,7 +60,7 @@ export default {
       if (!audioElement) {
         console.error("Áudio não encontrado após o componente ser montado!");
       }
-      if (route.path !== '/') {
+      if (route.path !== '/' && audioElement) {
         audioElement.pause();
         isPlaying.value = false;
       }

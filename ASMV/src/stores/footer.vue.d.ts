@@ -1,5 +1,5 @@
-declare module './footer.vue' {
+declare module '*.vue' {
   import { DefineComponent } from 'vue';
-  const Footer: DefineComponent<{}, {}, any>;
-  export default Footer;
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
 }
