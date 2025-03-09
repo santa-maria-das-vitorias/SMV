@@ -7,7 +7,7 @@
       <p>Pedimos desculpas por qualquer inconveniente e agradecemos sua paciência durante esse período de reestruturação.</p>
       <div class="flex flex-col md:flex-row items-center justify-center gap-2">
         <button @click="redirectHome" class="btn-primary">Voltar ao Início</button>
-        <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_ID" target="_blank">
+        <a href="https://www.paypal.com/ncp/payment/TYNYLJQ33BF9U" target="_blank">
           <button>Contribua com uma doação</button>
         </a>
       </div>
