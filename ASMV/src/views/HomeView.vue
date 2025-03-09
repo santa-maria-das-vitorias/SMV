@@ -37,9 +37,11 @@
             <div class="card p-4">
               <h1 class="text-center mt-2">Doações</h1>
               <div class="flex flex-col items-center mt-4 gap-4">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all">
-                  <i class="pi pi-paypal" /> Doe com PayPal
-                </button>
+                <a href="https://www.paypal.com/ncp/payment/TYNYLJQ33BF9U" target="_blank">
+                  <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all">
+                    <i class="pi pi-paypal" /> Doe com PayPal
+                  </button>
+                </a>
               </div>
               <p class="text-center text-sm mt-4 h-fit">
                 É rápido, grátis e seguro!
@@ -63,9 +65,11 @@
           <div class="card p-4">
             <h1 class="text-center mt-2">Doações</h1>
             <div class="flex flex-col items-center mt-4 gap-4">
-              <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all">
-                <i class="pi pi-paypal" /> Doe com PayPal
-              </button>
+              <a href="https://www.paypal.com/ncp/payment/TYNYLJQ33BF9U" target="_blank">
+                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all">
+                  <i class="pi pi-paypal" /> Doe com PayPal
+                </button>
+              </a>
             </div>
             <p class="text-center text-sm mt-4 h-fit">
               É rápido, grátis e seguro!

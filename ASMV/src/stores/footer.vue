@@ -6,7 +6,7 @@
     <button v-if="$route.path === '/'" @click="toggleMusic" class=" text-xs bg-primary-800 text-white p-2 rounded-full aspect-square h-10 items-center justify-center flex hover:bg-primary-500">
       <i :class="isPlaying ? 'pi pi-pause' : 'pi pi-play'"></i>
     </button>
-    <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_PAYPAL_ID" class="" target="_blank">
+    <a href="https://www.paypal.com/ncp/payment/TYNYLJQ33BF9U" target="_blank">
       <button class="bg-primary-800 text-white p-2 rounded-full h-10 items-center aspect-square justify-center flex hover:bg-primary-500">
         <i class="text-bold text-lg pi pi-paypal"></i>
         <span class="hidden text-xs">Doe agora!</span>
