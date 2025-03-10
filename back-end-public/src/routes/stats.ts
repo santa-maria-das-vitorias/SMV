@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { body, param, validationResult } from 'express-validator';
-import { formatReactions, getArticleStats, createArticleStats, incrementArticleStats } from './statsQueries';
+import { getArticleStats, createArticleStat } from './statsQueries';
 
 const router = Router();
 
@@ -19,74 +19,23 @@ router.post(
   '/',
   [
     body('articleSlug').isString().trim().escape(),
-    body('reactions').isObject(),
-    body('visits').isInt(),
+    body('stat').isString().trim().escape(),
   ],
   async (req: Request, res: Response): Promise<void> => {
     if (!validateRequest(req, res)) return;
 
-    const { articleSlug, reactions, visits } = req.body;
+    const { articleSlug, stat } = req.body;
 
     try {
-      const existingStats = await getArticleStats(articleSlug);
-
-      if (existingStats) {
-        res.status(400).json({ error: 'Estatísticas do artigo já existem' });
-        return;
-      }
-
-      await createArticleStats(articleSlug, reactions, visits);
+      await createArticleStat(articleSlug, stat);
 
       res.status(201).json({
         articleSlug,
-        reactions: formatReactions(reactions),
-        visits,
+        stat,
       });
     } catch (error) {
-      console.error('Error creating article stats:', error);
-      res.status(500).json({ error: 'Erro ao criar estatísticas do artigo' });
-    }
-  }
-);
-
-// PUT - Atualizar estatísticas
-router.put(
-  '/:articleSlug',
-  [
-    param('articleSlug').isString().trim().escape(),
-    body('reactionType').isString().trim().escape(),
-  ],
-  async (req: Request, res: Response): Promise<void> => {
-    if (!validateRequest(req, res)) return;
-
-    const { articleSlug } = req.params;
-    const { reactionType } = req.body;
-
-    try {
-      const existingStats = await getArticleStats(articleSlug);
-
-      if (!existingStats) {
-        res.status(404).json({ error: 'Estatísticas do artigo não encontradas' });
-        return;
-      }
-
-      await incrementArticleStats(articleSlug, reactionType);
-
-      const updatedStats = await getArticleStats(articleSlug);
-
-      if (!updatedStats || !updatedStats.reactions) {
-        res.status(500).json({ error: 'Erro ao atualizar estatísticas do artigo' });
-        return;
-      }
-
-      res.json({
-        articleSlug: updatedStats.article_slug,
-        reactions: formatReactions(updatedStats.reactions),
-        visits: updatedStats.visits,
-      });
-    } catch (error) {
-      console.error('Error updating article stats:', error);
-      res.status(500).json({ error: 'Erro ao atualizar estatísticas do artigo' });
+      console.error('Error creating article stat:', error);
+      res.status(500).json({ error: 'Erro ao criar estatística do artigo' });
     }
   }
 );
@@ -100,15 +49,9 @@ router.get(
     try {
       const stats = await getArticleStats(articleSlug);
 
-      if (!stats || !stats.reactions) {
-        res.status(404).json({ error: 'Estatísticas do artigo não encontradas' });
-        return;
-      }
-
       res.json({
-        articleSlug: stats.article_slug,
-        reactions: formatReactions(stats.reactions),
-        visits: stats.visits,
+        articleSlug,
+        stats,
       });
     } catch (error) {
       console.error('Error fetching article stats:', error);

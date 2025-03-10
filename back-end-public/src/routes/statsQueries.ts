@@ -1,33 +1,28 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, ArticleStat } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Função de utilidade para formatar as reações
-export const formatReactions = (reactions: any) => ({
-  like: reactions.like || 0,
-  love: reactions.love || 0,
-  surprised: reactions.surprised || 0,
-  sad: reactions.sad || 0,
-});
-
 // Função para buscar estatísticas do artigo
 export const getArticleStats = async (articleSlug: string) => {
-  return await prisma.articleStats.findUnique({
+  const stats = await prisma.articleStat.findMany({
     where: { article_slug: articleSlug },
   });
+
+  const formattedStats = stats.reduce<{ [key: string]: number }>(
+    (acc: { [key: string]: number }, stat: ArticleStat) => {
+      const key = stat.stat || 'visit';
+      acc[key] = (acc[key] || 0) + 1;
+      return acc;
+    }, 
+    {}
+  );
+
+  return formattedStats;
 };
 
-// Função para criar estatísticas do artigo
-export const createArticleStats = async (articleSlug: string, reactions: any, visits: number) => {
+// Função para criar uma nova interação de estatística de artigo
+export const createArticleStat = async (articleSlug: string, stat: string) => {
   await prisma.$executeRaw`
-    CALL public_stats.create_article_stats(${articleSlug}, ${JSON.stringify(reactions)}::jsonb, ${visits})
+    CALL public_stats.create_article_stat(${articleSlug}, ${stat})
   `;
-};
-
-// Função para incrementar visita e reação do artigo
-export const incrementArticleStats = async (articleSlug: string, reactionType: string) => {
-  await Promise.all([
-    prisma.$executeRaw`CALL public_stats.increment_article_visit(${articleSlug})`,
-    prisma.$executeRaw`CALL public_stats.increment_article_reaction(${articleSlug}, ${reactionType})`
-  ]);
 };

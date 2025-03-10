@@ -6,7 +6,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["dbp","public_stats"]
+  schemas  = ["dbp", "public_stats"]
 }
 
 model Category {
@@ -45,11 +45,10 @@ model ArticleCategory {
   @@schema("dbp")
 }
 
-model ArticleStats {
-  article_slug    String @id
-  reactions       Json
-  current_reaction String?
-  visits          Int    @default(0)
+model ArticleStat {
+  id  Int @id @default(autoincrement())
+  article_slug String
+  stat  String @db.VarChar(50)
 
   @@map("article_stats")
   @@schema("public_stats")

@@ -23,27 +23,27 @@ CREATE DATABASE smv WITH ENCODING='UTF8' LC_COLLATE='pt_BR.UTF-8' LC_CTYPE='pt_B
 
 ```sql
 -- Criação do usuário "smv_readonly"
-CREATE USER smv_readonly WITH ENCRYPTED PASSWORD 'senha_segura';
+CREATE USER smv_usr WITH ENCRYPTED PASSWORD '789456123';
 
 -- Conceda permissões de uso e leitura no schema "dbp"
-GRANT USAGE ON SCHEMA dbp TO smv_readonly;
-GRANT SELECT ON ALL TABLES IN SCHEMA dbp TO smv_readonly;
+GRANT USAGE ON SCHEMA dbp TO smv_usr;
+GRANT SELECT ON ALL TABLES IN SCHEMA dbp TO smv_usr;
 
 -- Conceda permissões de uso, inserção, atualização, exclusão e leitura no schema "public_stats"
-GRANT USAGE ON SCHEMA public_stats TO smv_readonly;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public_stats TO smv_readonly;
+GRANT USAGE ON SCHEMA public_stats TO smv_usr;
+GRANT SELECT, INSERT ON public_stats.article_stats TO smv_usr;
+GRANT USAGE ON SEQUENCE public_stats.article_stats_id_seq TO smv_usr;
 
--- Garantir que futuras tabelas no schema "dbp" tenham permissões de leitura concedidas ao usuário read-only
-ALTER DEFAULT PRIVILEGES IN SCHEMA dbp GRANT SELECT ON TABLES TO smv_readonly;
+-- Garantir que futuras tabelas tenham permissões de leitura concedidas ao usuário read-only
+ALTER DEFAULT PRIVILEGES IN SCHEMA dbp GRANT SELECT ON TABLES TO smv_usr;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public_stats GRANT SELECT ON TABLES TO smv_usr;
 ```
 
-## Schema "dbp"
+## Schemas
 
 ```sql
 CREATE SCHEMA dbp;
 ```
-
-## Schema "public_stats"
 
 ```sql
 CREATE SCHEMA public_stats;
@@ -102,60 +102,40 @@ CREATE TABLE dbp.article_categories (
 
 ```sql
 CREATE TABLE public_stats.article_stats (
-    article_slug VARCHAR(255) NOT NULL,
-    reactions JSONB NOT NULL,
-    visits INTEGER NOT NULL DEFAULT 0,
-    
-    CONSTRAINT article_stats_pkey PRIMARY KEY (article_slug),
-    CONSTRAINT article_stats_article_slug_fkey FOREIGN KEY (article_slug)
-        REFERENCES dbp.articles (slug) ON DELETE CASCADE ON UPDATE CASCADE
+	id SERIAL NOT NULL,
+	article_slug VARCHAR(255) NOT NULL,
+	stat VARCHAR(50) NOT null,
+
+	CONSTRAINT article_stats_pkey PRIMARY KEY (id),
+	CONSTRAINT article_stats_article_slug_fkey FOREIGN KEY (article_slug)
+		REFERENCES dbp.articles (slug) ON DELETE CASCADE ON UPDATE CASCADE
 );
 ```
 
 ## Stored Procedures
 
+Stored procedure para criar uma nova interação de estatística de artigo:
 ```sql
--- Stored procedure para criar novas estatísticas de artigo
-CREATE OR REPLACE PROCEDURE public_stats.create_article_stats(
+-- Stored procedure para criar uma nova interação de estatística de artigo
+CREATE OR REPLACE PROCEDURE public_stats.create_article_stat(
     p_article_slug TEXT,
-    p_reactions JSONB,
-    p_visits INTEGER
+    p_stat TEXT
 )
 LANGUAGE plpgsql
 AS $$
 BEGIN
     INSERT INTO public_stats.article_stats (
         article_slug,
-        reactions,
-        visits
+        stat
     ) VALUES (
         p_article_slug,
-        p_reactions,
-        p_visits
+        p_stat
     );
 END;
 $$;
 ```
 
-```sql
--- Stored procedure para atualizar estatísticas de artigo existente no schema public_stats
-CREATE OR REPLACE PROCEDURE public_stats.update_article_stats(
-    p_article_slug TEXT,
-    p_reactions JSONB,
-    p_visits INTEGER
-)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    UPDATE public_stats.article_stats
-    SET 
-        reactions = p_reactions,
-        visits = p_visits
-    WHERE article_slug = p_article_slug;
-END;
-$$;
-```
-
+Incrementar Contagem de Visitas:
 ```sql
 -- Incrementar Contagem de Visitas
 CREATE OR REPLACE PROCEDURE public_stats.increment_article_visit(
@@ -164,14 +144,12 @@ CREATE OR REPLACE PROCEDURE public_stats.increment_article_visit(
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    UPDATE public_stats.article_stats
-    SET 
-        visits = visits + 1
-    WHERE article_slug = p_article_slug;
+    CALL public_stats.create_article_stat(p_article_slug, 'visit');
 END;
 $$;
 ```
 
+Incrementar Reação Específica:
 ```sql
 -- Incrementar Reação Específica
 CREATE OR REPLACE PROCEDURE public_stats.increment_article_reaction(
@@ -180,48 +158,10 @@ CREATE OR REPLACE PROCEDURE public_stats.increment_article_reaction(
 )
 LANGUAGE plpgsql
 AS $$
-DECLARE
-    current_reactions JSONB;
-    new_count INTEGER;
 BEGIN
-    -- Obter reações atuais
-    SELECT reactions INTO current_reactions
-    FROM public_stats.article_stats
-    WHERE article_slug = p_article_slug;
-    
-    -- Calcular novo valor para o tipo de reação especificado
-    -- Definir para 0 se a reação ainda não existir
-    SELECT COALESCE((current_reactions->>p_reaction_type)::INTEGER, 0) + 1 INTO new_count;
-    
-    -- Atualizar a contagem da reação específica preservando outras reações
-    UPDATE public_stats.article_stats
-    SET 
-        reactions = jsonb_set(reactions, ARRAY[p_reaction_type], to_jsonb(new_count))
-    WHERE article_slug = p_article_slug;
+    CALL public_stats.create_article_stat(p_article_slug, p_reaction_type);
 END;
 $$;
-```
-
-## Regras e triggers
-
-Para criar uma regra (trigger) no PostgreSQL que insere automaticamente um registro na tabela public_stats.article_stats sempre que um novo registro é inserido na tabela dbp.articles.
-
-``` sql
-CREATE OR REPLACE FUNCTION insert_article_stats()
-RETURNS TRIGGER AS $$
-BEGIN
-    INSERT INTO public_stats.article_stats (article_slug, reactions, visits)
-    VALUES (NEW.slug, '{"sad": 0, "like": 0, "love": 0, "surprised": 0}', 0);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-```
-
-```sql
-CREATE TRIGGER after_article_insert
-AFTER INSERT ON dbp.articles
-FOR EACH ROW
-EXECUTE FUNCTION insert_article_stats();
 ```
 
 # API Endpoints
@@ -342,17 +282,15 @@ Retrieves a list of all categories.
 
 **Response:**
 ```json
-{
-  "categories": [
-    {
-      "id": 1,
-      "title": "Category Title",
-      "slug": "category-slug"
-    },
-    // More categories...
-  ],
-  "total": 10
-}
+[
+  {
+    "id": 1,
+    "title": "Category Title",
+    "slug": "category-slug"
+  },
+  // More categories...
+]
+
 ```
 
 **Status Codes:**
@@ -400,12 +338,12 @@ Retrieves a list of articles in a specific category by its slug.
 
 ## Stats
 
-#### GET /stats/:slug
+### GET /stats/:articleSlug
 
 Retrieves statistics for a specific article.
 
 **Path Parameters:**
-- `slug`: Unique slug of the article
+- `articleSlug`: Unique slug of the article
 
 **Required Headers:**
 - `X-API-Key`: Your 50-character secret key
@@ -414,12 +352,12 @@ Retrieves statistics for a specific article.
 ```json
 {
   "article_slug": "article-slug",
-  "visits": 1250,
-  "reactions": {
+  "stats": {
     "like": 42,
     "love": 18,
     "surprised": 7,
-    "sad": 15
+    "sad": 15,
+    "visit": 1250
   }
 }
 ```
@@ -429,47 +367,36 @@ Retrieves statistics for a specific article.
 - `404 Not Found`: Article stats not found
 - `401 Unauthorized`: Missing or invalid API key
 
-#### POST /stats/articles/:slug/reaction
+### POST /stats
 
-Adds a reaction to an article.
-
-**Path Parameters:**
-- `slug`: Unique slug of the article
-
-**Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+Adds a reaction or visit to an article.
 
 **Request Body:**
 ```json
-curl -X PUT /api/stats/article-slug \
--H "Content-Type: application/json" \
--H "X-API-Key: your_50_character_secret_key" \
--d '{
-  "reactionType": "like"
-}'
+{
+  "articleSlug": "article-slug",
+  "stat": "like"
+}
 ```
 
 **Validation Rules:**
-- `reaction_type`: Required, string, must be one of the supported reaction types (like, love, surprised, sad or `visit`)
+- `articleSlug`: Required, string
+- `stat`: Required, string, must be one of the supported reaction types (like, love, surprised, sad, visit)
+
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
 
 **Response:**
 ```json
 {
   "article_slug": "article-slug",
-  "reactions": {
-    "like": 43,
-    "love": 18,
-    "clap": 7,
-    "insightful": 15
-  },
-  "visits":517
+  "stat": "like"
 }
 ```
 
 **Status Codes:**
-- `200 OK`: Reaction added successfully
-- `400 Bad Request`: Invalid reaction type
-- `404 Not Found`: Article not found
+- `201 Created`: Reaction or visit added successfully
+- `400 Bad Request`: Invalid request body
 - `401 Unauthorized`: Missing or invalid API key
 
 ## Environment Configuration
@@ -486,3 +413,4 @@ Key configuration details:
 - `PORT`: The port on which the API server will run
 - `DATABASE_URL`: Connection string for the PostgreSQL database
 - `API_SECRET_KEY`: A 50-character secret key used for API authentication
+```
