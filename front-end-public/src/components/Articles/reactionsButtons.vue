@@ -2,36 +2,18 @@
   <div>
     <div class="flex gap-10">
       <button 
-        @click="react('like')" 
-        :disabled="isProcessing || !canReact('like')"
-        :class="{'brightness-90 scale-75': isProcessing || !canReact('like'), ' bg-surface-200': currentReaction === 'like', 'bg-gray-300': currentReaction === 'like'}" 
+        v-for="reaction in reactions" 
+        :key="reaction.type"
+        @click="react(reaction.type)" 
+        :disabled="isProcessing || !canReact(reaction.type)"
+        :class="{
+          'bg-surface-300': isProcessing || !canReact(reaction.type), 
+          'bg-surface-200': currentReaction === reaction.type, 
+          'bg-gray-300': currentReaction === reaction.type
+        }" 
         class="transition-all active:scale-90 p-2 rounded-full"
       >
-        👍 {{ like }}
-      </button>
-      <button 
-        @click="react('love')" 
-        :disabled="isProcessing || !canReact('love')"
-        :class="{'brightness-90 scale-75': isProcessing || !canReact('love'), ' bg-surface-200': currentReaction === 'love', 'bg-gray-300': currentReaction === 'love'}" 
-        class="transition-all active:scale-90 p-2 rounded-full"
-      >
-        ❤️ {{ love }}
-      </button>
-      <button 
-        @click="react('surprised')" 
-        :disabled="isProcessing || !canReact('surprised')"
-        :class="{'brightness-90 scale-75': isProcessing || !canReact('surprised'), ' bg-surface-200': currentReaction === 'surprised', 'bg-gray-300': currentReaction === 'surprised'}" 
-        class="transition-all active:scale-90 p-2 rounded-full"
-      >
-        😮 {{ surprised }}
-      </button>
-      <button 
-        @click="react('sad')" 
-        :disabled="isProcessing || !canReact('sad')"
-        :class="{'brightness-90 scale-75': isProcessing || !canReact('sad'), ' bg-surface-200': currentReaction === 'sad', 'bg-gray-300': currentReaction === 'sad'}" 
-        class="transition-all active:scale-90 p-2 rounded-full"
-      >
-        😢 {{ sad }}
+        {{ reaction.icon }} {{ reaction.count }}
       </button>
     </div>
     <div class="mt-4 text-center">
@@ -54,10 +36,12 @@ export default {
   },
   data() {
     return {
-      like: 0,
-      love: 0,
-      surprised: 0,
-      sad: 0,
+      reactions: [
+        { type: 'like', icon: '👍', count: 0 },
+        { type: 'love', icon: '❤️', count: 0 },
+        { type: 'surprised', icon: '😮', count: 0 },
+        { type: 'sad', icon: '😢', count: 0 },
+      ],
       currentReaction: null,
       visits: 0,
       isProcessing: false,
@@ -71,38 +55,36 @@ export default {
     async loadReactions() {
       try {
         const data = await fetchReactionsArticle({ articleSlug: this.articleSlug });
-        this.like = data.reactions.like;
-        this.love = data.reactions.love;
-        this.surprised = data.reactions.surprised;
-        this.sad = data.reactions.sad;
+        this.reactions.forEach(reaction => {
+          reaction.count = data.reactions[reaction.type];
+        });
         this.visits = data.visits;
       } catch (error) {
         console.error('Erro ao carregar reações:', error);
       }
     },
-    async react(reaction) {
-      if (this.isProcessing || !this.canReact(reaction)) {
+    async react(reactionType) {
+      if (this.isProcessing || !this.canReact(reactionType)) {
         return;
       }
 
       this.isProcessing = true;
 
       try {
-        const data = await addReactionArticle({ articleSlug: this.articleSlug, reactionType: reaction });
+        const data = await addReactionArticle({ articleSlug: this.articleSlug, reactionType });
 
-        this.like = data.reactions.like;
-        this.love = data.reactions.love;
-        this.surprised = data.reactions.surprised;
-        this.sad = data.reactions.sad;
+        this.reactions.forEach(reaction => {
+          reaction.count = data.reactions[reaction.type];
+        });
         this.visits = data.visits;
 
-        if (this.currentReaction === reaction) {
+        if (this.currentReaction === reactionType) {
           this.currentReaction = null;
         } else {
-          this.currentReaction = reaction;
+          this.currentReaction = reactionType;
         }
 
-        localStorage.setItem(`lastReaction_${this.articleSlug}_${reaction}`, new Date().getTime());
+        localStorage.setItem(`lastReaction_${this.articleSlug}_${reactionType}`, new Date().getTime());
       } catch (error) {
         console.error('Erro ao adicionar reação:', error);
       } finally {
@@ -113,7 +95,7 @@ export default {
       const lastVisit = localStorage.getItem(`lastVisit_${this.articleSlug}`);
       const now = new Date().getTime();
 
-      if (!lastVisit || now - lastVisit > 30 * 60 * 1000) { // 30 minutes
+      if (!lastVisit || now - lastVisit > 12 * 60 * 60 * 1000) { // 30 minutes
         try {
           await addArticleVisit({ articleSlug: this.articleSlug });
           localStorage.setItem(`lastVisit_${this.articleSlug}`, now);
@@ -123,8 +105,8 @@ export default {
         }
       }
     },
-    canReact(reaction) {
-      const lastReaction = localStorage.getItem(`lastReaction_${this.articleSlug}_${reaction}`);
+    canReact(reactionType) {
+      const lastReaction = localStorage.getItem(`lastReaction_${this.articleSlug}_${reactionType}`);
       const now = new Date().getTime();
       return !lastReaction || now - lastReaction > 12 * 60 * 60 * 1000; // 12 hours
     }

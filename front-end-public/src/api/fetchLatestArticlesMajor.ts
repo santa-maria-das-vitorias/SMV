@@ -1,4 +1,20 @@
-export const fetchLatestArticlesMajor = async () => {
+import { LRUCache } from 'lru-cache';
+
+interface Article {
+  image?: string;
+  imageUrl?: string | null;
+  date: string;
+  [key: string]: any;
+}
+
+const cache = new LRUCache<string, Article[]>({ max: 100, ttl: 1000 * 60 * 60 }); // Cache até 100 artigos por 1 hora
+
+export const fetchLatestArticlesMajor = async (): Promise<Article[]> => {
+  const cachedArticles = cache.get('latestArticlesMajor');
+  if (cachedArticles) {
+    return cachedArticles;
+  }
+
   try {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/articles`, {
       headers: {
@@ -10,7 +26,7 @@ export const fetchLatestArticlesMajor = async () => {
       throw new Error('Network response was not ok');
     }
 
-    const articles = await response.json();
+    const articles: Article[] = await response.json();
 
     // Adicionar URLs completas das imagens
     const articlesWithImageUrls = articles.map(article => {
@@ -25,7 +41,9 @@ export const fetchLatestArticlesMajor = async () => {
     });
 
     // Ordenar os artigos por data, do mais recente para o mais antigo
-    const sortedArticles = articlesWithImageUrls.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const sortedArticles = articlesWithImageUrls.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    cache.set('latestArticlesMajor', sortedArticles);
 
     return sortedArticles;
   } catch (error) {

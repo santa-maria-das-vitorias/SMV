@@ -1,6 +1,26 @@
 import { fetchReactionsArticle } from './fetchReactionsArticle';
+import { LRUCache } from 'lru-cache';
 
-export const addReactionArticle = async ({ articleSlug, reactionType }) => {
+interface AddReactionArticleParams {
+  articleSlug: string;
+  reactionType: string;
+}
+
+interface Reactions {
+  like: number;
+  love: number;
+  surprised: number;
+  sad: number;
+}
+
+interface ArticleStats {
+  reactions: Reactions;
+  visits: number;
+}
+
+const cache = new LRUCache<string, ArticleStats>({ max: 100, ttl: 1000 * 60 * 60 }); // Cache até 100 artigos por 1 hora
+
+export const addReactionArticle = async ({ articleSlug, reactionType }: AddReactionArticleParams): Promise<ArticleStats> => {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/stats`, {
       method: 'POST',
@@ -20,6 +40,9 @@ export const addReactionArticle = async ({ articleSlug, reactionType }) => {
 
     // Fetch the updated stats
     const updatedStats = await fetchReactionsArticle({ articleSlug });
+
+    // Update the cache with the new stats
+    cache.set(articleSlug, updatedStats);
 
     return updatedStats;
   } catch (error) {
