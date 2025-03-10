@@ -32,7 +32,7 @@ const limiter = rateLimit({
 app.use(express.json());
 
 app.use(limiter);
-app.use(cache('1 second'));
+app.use(cache('1 hour'));
 app.use(helmet());
 app.use(compression());
 

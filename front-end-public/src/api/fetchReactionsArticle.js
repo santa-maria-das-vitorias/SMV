@@ -11,7 +11,15 @@ export const fetchReactionsArticle = async ({ articleSlug }) => {
     }
 
     const data = await response.json();
-    return data;
+    return {
+      reactions: {
+        like: data.stats.like || 0,
+        love: data.stats.love || 0,
+        surprised: data.stats.surprised || 0,
+        sad: data.stats.sad || 0,
+      },
+      visits: data.stats.visit || 0
+    };
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
     throw error;
