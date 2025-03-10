@@ -199,3 +199,463 @@ BEGIN
 END;
 $$;
 ```
+
+## API Endpoints
+
+This section documents all available API endpoints for interacting with the SMV application.
+
+### Articles
+
+#### GET /articles
+
+Retrieves a list of all articles.
+
+**Query Parameters:**
+- `limit` (optional): Number of articles to return (default: 10)
+- `offset` (optional): Number of articles to skip (default: 0)
+- `category` (optional): Filter articles by category slug
+- `search` (optional): Search text in article title and content
+
+**Response:**
+```json
+{
+  "articles": [
+    {
+      "id": 1,
+      "title": "Article Title",
+      "slug": "article-slug",
+      "date": "2023-06-15T10:30:00Z",
+      "image": "path/to/image.jpg",
+      "author": "Author Name",
+      "have_image": true,
+      "categories": [
+        {
+          "id": 1,
+          "title": "Category Title",
+          "slug": "category-slug"
+        }
+      ]
+    },
+    // More articles...
+  ],
+  "total": 50,
+  "limit": 10,
+  "offset": 0
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successful request
+- `400 Bad Request`: Invalid parameters
+
+#### GET /articles/:slug
+
+Retrieves a specific article by its slug.
+
+**Path Parameters:**
+- `slug`: Unique slug of the article
+
+**Response:**
+```json
+{
+  "id": 1,
+  "title": "Article Title",
+  "slug": "article-slug",
+  "date": "2023-06-15T10:30:00Z",
+  "image": "path/to/image.jpg",
+  "author": "Author Name",
+  "have_image": true,
+  "content": "Full article content in markdown or HTML format",
+  "categories": [
+    {
+      "id": 1,
+      "title": "Category Title",
+      "slug": "category-slug"
+    }
+  ]
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successful request
+- `404 Not Found`: Article not found
+
+#### POST /articles
+
+Creates a new article.
+
+**Request Body:**
+```json
+{
+  "title": "New Article Title",
+  "author": "Author Name",
+  "content": "Article content in markdown or HTML",
+  "image": "path/to/image.jpg", // Optional
+  "categories": [1, 2] // Array of category IDs
+}
+```
+
+**Validation Rules:**
+- `title`: Required, string, max 255 characters
+- `author`: Required, string, max 100 characters
+- `content`: Required, string
+- `image`: Optional, string, max 255 characters
+- `categories`: Optional, array of existing category IDs
+
+**Response:**
+```json
+{
+  "id": 3,
+  "title": "New Article Title",
+  "slug": "new-article-title",
+  "date": "2023-06-15T10:30:00Z",
+  "image": "path/to/image.jpg",
+  "author": "Author Name",
+  "have_image": true,
+  "content": "Article content in markdown or HTML",
+  "categories": [
+    {
+      "id": 1,
+      "title": "Category Title",
+      "slug": "category-slug"
+    }
+  ]
+}
+```
+
+**Status Codes:**
+- `201 Created`: Article successfully created
+- `400 Bad Request`: Invalid parameters or validation errors
+- `409 Conflict`: Article with the same slug already exists
+
+#### PUT /articles/:slug
+
+Updates an existing article.
+
+**Path Parameters:**
+- `slug`: Unique slug of the article
+
+**Request Body:**
+```json
+{
+  "title": "Updated Article Title",
+  "author": "Updated Author Name",
+  "content": "Updated article content",
+  "image": "path/to/new-image.jpg",
+  "categories": [1, 3]
+}
+```
+
+**Validation Rules:**
+- All fields are optional, but at least one must be provided
+- Same validation rules as POST apply to provided fields
+
+**Response:**
+```json
+{
+  "id": 3,
+  "title": "Updated Article Title",
+  "slug": "updated-article-title",
+  "date": "2023-06-15T10:30:00Z",
+  "image": "path/to/new-image.jpg",
+  "author": "Updated Author Name",
+  "have_image": true,
+  "content": "Updated article content",
+  "categories": [
+    {
+      "id": 1,
+      "title": "Category Title",
+      "slug": "category-slug"
+    },
+    {
+      "id": 3,
+      "title": "Another Category",
+      "slug": "another-category"
+    }
+  ]
+}
+```
+
+**Status Codes:**
+- `200 OK`: Article successfully updated
+- `400 Bad Request`: Invalid parameters or validation errors
+- `404 Not Found`: Article not found
+- `409 Conflict`: Update would create a duplicate slug
+
+#### DELETE /articles/:slug
+
+Deletes an existing article.
+
+**Path Parameters:**
+- `slug`: Unique slug of the article
+
+**Response:**
+```json
+{
+  "message": "Article successfully deleted"
+}
+```
+
+**Status Codes:**
+- `200 OK`: Article successfully deleted
+- `404 Not Found`: Article not found
+
+### Categories
+
+#### GET /categories
+
+Retrieves a list of all categories.
+
+**Query Parameters:**
+- `limit` (optional): Number of categories to return (default: all)
+- `offset` (optional): Number of categories to skip (default: 0)
+
+**Response:**
+```json
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "Category Title",
+      "slug": "category-slug",
+      "article_count": 5
+    },
+    // More categories...
+  ],
+  "total": 10
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successful request
+
+#### GET /categories/:slug
+
+Retrieves a specific category by its slug.
+
+**Path Parameters:**
+- `slug`: Unique slug of the category
+
+**Response:**
+```json
+{
+  "id": 1,
+  "title": "Category Title",
+  "slug": "category-slug",
+  "articles": [
+    {
+      "id": 1,
+      "title": "Article Title",
+      "slug": "article-slug",
+      "date": "2023-06-15T10:30:00Z",
+      "image": "path/to/image.jpg",
+      "author": "Author Name",
+      "have_image": true
+    },
+    // More articles in this category...
+  ]
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successful request
+- `404 Not Found`: Category not found
+
+#### POST /categories
+
+Creates a new category.
+
+**Request Body:**
+```json
+{
+  "title": "New Category Title"
+}
+```
+
+**Validation Rules:**
+- `title`: Required, string, max 100 characters, must be unique
+
+**Response:**
+```json
+{
+  "id": 5,
+  "title": "New Category Title",
+  "slug": "new-category-title",
+  "article_count": 0
+}
+```
+
+**Status Codes:**
+- `201 Created`: Category successfully created
+- `400 Bad Request`: Invalid parameters or validation errors
+- `409 Conflict`: Category with the same title/slug already exists
+
+#### PUT /categories/:slug
+
+Updates an existing category.
+
+**Path Parameters:**
+- `slug`: Unique slug of the category
+
+**Request Body:**
+```json
+{
+  "title": "Updated Category Title"
+}
+```
+
+**Validation Rules:**
+- `title`: Required, string, max 100 characters, must be unique
+
+**Response:**
+```json
+{
+  "id": 5,
+  "title": "Updated Category Title",
+  "slug": "updated-category-title",
+  "article_count": 3
+}
+```
+
+**Status Codes:**
+- `200 OK`: Category successfully updated
+- `400 Bad Request`: Invalid parameters or validation errors
+- `404 Not Found`: Category not found
+- `409 Conflict`: Update would create a duplicate title/slug
+
+#### DELETE /categories/:slug
+
+Deletes an existing category.
+
+**Path Parameters:**
+- `slug`: Unique slug of the category
+
+**Response:**
+```json
+{
+  "message": "Category successfully deleted"
+}
+```
+
+**Status Codes:**
+- `200 OK`: Category successfully deleted
+- `404 Not Found`: Category not found
+
+### Stats
+
+#### GET /stats/articles/:slug
+
+Retrieves statistics for a specific article.
+
+**Path Parameters:**
+- `slug`: Unique slug of the article
+
+**Response:**
+```json
+{
+  "article_slug": "article-slug",
+  "visits": 1250,
+  "reactions": {
+    "like": 42,
+    "love": 18,
+    "clap": 7,
+    "insightful": 15
+  }
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successful request
+- `404 Not Found`: Article stats not found
+
+#### POST /stats/articles/:slug/visit
+
+Increments the visit count for an article.
+
+**Path Parameters:**
+- `slug`: Unique slug of the article
+
+**Response:**
+```json
+{
+  "article_slug": "article-slug",
+  "visits": 1251,
+  "message": "Visit count incremented successfully"
+}
+```
+
+**Status Codes:**
+- `200 OK`: Visit count incremented successfully
+- `404 Not Found`: Article not found
+
+#### POST /stats/articles/:slug/reaction
+
+Adds a reaction to an article.
+
+**Path Parameters:**
+- `slug`: Unique slug of the article
+
+**Request Body:**
+```json
+{
+  "reaction_type": "like"
+}
+```
+
+**Validation Rules:**
+- `reaction_type`: Required, string, must be one of the supported reaction types (like, love, clap, insightful)
+
+**Response:**
+```json
+{
+  "article_slug": "article-slug",
+  "reactions": {
+    "like": 43,
+    "love": 18,
+    "clap": 7,
+    "insightful": 15
+  },
+  "message": "Reaction added successfully"
+}
+```
+
+**Status Codes:**
+- `200 OK`: Reaction added successfully
+- `400 Bad Request`: Invalid reaction type
+- `404 Not Found`: Article not found
+
+#### GET /stats/most-popular
+
+Retrieves a list of the most popular articles based on visits and reactions.
+
+**Query Parameters:**
+- `limit` (optional): Number of articles to return (default: 5)
+- `period` (optional): Time period - "day", "week", "month", "all" (default: "all")
+
+**Response:**
+```json
+{
+  "most_visited": [
+    {
+      "article_slug": "popular-article-1",
+      "title": "Popular Article 1",
+      "visits": 3500,
+      "total_reactions": 120
+    },
+    // More articles...
+  ],
+  "most_reacted": [
+    {
+      "article_slug": "popular-article-2",
+      "title": "Popular Article 2",
+      "visits": 2800,
+      "total_reactions": 180
+    },
+    // More articles...
+  ]
+}
+```
+
+**Status Codes:**
+- `200 OK`: Successful request
+- `400 Bad Request`: Invalid parameters
