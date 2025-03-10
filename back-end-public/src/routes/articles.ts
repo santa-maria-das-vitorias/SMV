@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const articles = await prisma.article.findMany({
+    const articlesRaw = await prisma.article.findMany({
       select: {
         id: true,
         title: true,
@@ -18,11 +18,23 @@ router.get('/', async (req: Request, res: Response) => {
         author: true,
         categories: {
           select: {
-            category_id: true
+            category: {
+              select: {
+                id: true,
+                title: true,
+                slug: true
+              }
+            }
           }
         }
       }
     });
+
+    // Transform the articles data to flatten the categories structure
+    const articles = articlesRaw.map(article => ({
+      ...article,
+      categories: article.categories.map(cat => cat.category)
+    }));
 
     res.json(articles);
   } catch (error) {
@@ -35,7 +47,7 @@ router.get('/:slug', async (req: Request, res: Response): Promise<void> => {
   const { slug } = req.params;
 
   try {
-    const article = await prisma.article.findUnique({
+    const articleRaw = await prisma.article.findUnique({
       where: { slug },
       select: {
         id: true,
@@ -48,16 +60,28 @@ router.get('/:slug', async (req: Request, res: Response): Promise<void> => {
         author: true,
         categories: {
           select: {
-            category_id: true
+            category: {
+              select: {
+                id: true,
+                title: true,
+                slug: true
+              }
+            }
           }
         }
       }
     });
 
-    if (!article) {
+    if (!articleRaw) {
       res.status(404).json({ error: 'Artigo não encontrado' });
       return;
     }
+
+    // Transform the article data to flatten the categories structure
+    const article = {
+      ...articleRaw,
+      categories: articleRaw.categories.map(cat => cat.category)
+    };
 
     res.json(article);
   } catch (error) {

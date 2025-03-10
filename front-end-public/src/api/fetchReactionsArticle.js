@@ -1,10 +1,19 @@
-import reactionsData from '@/api/data/reactionsArticle.json';
-
 export const fetchReactionsArticle = async ({ articleSlug }) => {
-  if (reactionsData.articleSlug === articleSlug) {
-    return reactionsData;
-  } else {
-    console.error('Reações não encontradas para o slug do artigo:', articleSlug);
-    throw new Error('Reactions not found');
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/stats/${articleSlug}`, {
+      headers: {
+        'X-API-Key': import.meta.env.VITE_API_KEY
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+    throw error;
   }
 };

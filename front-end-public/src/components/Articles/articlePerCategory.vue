@@ -44,13 +44,13 @@ export default {
   },
   computed: {
     paginatedArticles() {
-      if (!this.category) return [];
+      if (!this.category || !this.category.articles) return [];
       const start = (this.currentPage - 1) * this.articlesPerPage;
       const end = start + this.articlesPerPage;
       return this.category.articles.slice(start, end);
     },
     totalPages() {
-      if (!this.category) return 1;
+      if (!this.category || !this.category.articles) return 1;
       return Math.ceil(this.category.articles.length / this.articlesPerPage);
     },
   },
@@ -60,8 +60,8 @@ export default {
   methods: {
     async loadCategory() {
       try {
-        const data = await fetchArticlesPerCategory({ slug: this.categorySlug });
-        this.category = data;
+        const articles = await fetchArticlesPerCategory({ slug: this.categorySlug });
+        this.category = { articles };
       } catch (error) {
         console.error('Erro ao carregar categoria:', error);
       }

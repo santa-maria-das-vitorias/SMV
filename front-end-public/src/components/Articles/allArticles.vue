@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { fetchAllArticles } from '@/api/fetchLatestArticlesMajor.js';
+import { fetchLatestArticlesMajor } from '@/api/fetchLatestArticlesMajor.js';
 
 export default {
   data() {
@@ -52,7 +52,7 @@ export default {
   methods: {
     async loadArticles() {
       try {
-        const data = await fetchAllArticles();
+        const data = await fetchLatestArticlesMajor();
         this.articles = data;
       } catch (error) {
         console.error('Erro ao carregar artigos:', error);

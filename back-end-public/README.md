@@ -11,6 +11,8 @@ O banco de dados "smv" é um componente central deste projeto, responsável por 
 
 O banco utiliza PostgreSQL com um schema dedicado chamado "dbp" para organizar todos os objetos relacionados ao projeto.
 
+Lembre-se, para acessar localmente o banco de dados use `sudo -u postgres psql -d smv`
+
 ## Banco de Dados "smv"
 
 ```sql
@@ -200,13 +202,55 @@ END;
 $$;
 ```
 
-## API Endpoints
+## Regras e triggers
+
+Para criar uma regra (trigger) no PostgreSQL que insere automaticamente um registro na tabela public_stats.article_stats sempre que um novo registro é inserido na tabela dbp.articles.
+
+``` sql
+CREATE OR REPLACE FUNCTION insert_article_stats()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO public_stats.article_stats (article_slug, reactions, visits)
+    VALUES (NEW.slug, '{"sad": 0, "like": 0, "love": 0, "surprised": 0}', 0);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+```sql
+CREATE TRIGGER after_article_insert
+AFTER INSERT ON dbp.articles
+FOR EACH ROW
+EXECUTE FUNCTION insert_article_stats();
+```
+
+# API Endpoints
 
 This section documents all available API endpoints for interacting with the SMV application.
 
-### Articles
+## Authentication
 
-#### GET /articles
+All API requests require authentication using a secret key in the request header. This key must be included in every request to the API.
+
+**Header Parameter:**
+```
+X-API-Key: your_50_character_secret_key
+```
+
+The secret key is stored in the backend's .env file. Any request without a valid secret key will be rejected with a 401 Unauthorized response.
+
+**Example Request with Authentication:**
+```bash
+curl -X GET http://localhost:3000/api/articles \
+-H "X-API-Key: your_50_character_secret_key"
+```
+
+**Status Codes for Authentication Failures:**
+- `401 Unauthorized`: Missing or invalid API key
+
+## Articles
+
+### GET /articles
 
 Retrieves a list of all articles.
 
@@ -216,44 +260,46 @@ Retrieves a list of all articles.
 - `category` (optional): Filter articles by category slug
 - `search` (optional): Search text in article title and content
 
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
+
 **Response:**
 ```json
-{
-  "articles": [
-    {
-      "id": 1,
-      "title": "Article Title",
-      "slug": "article-slug",
-      "date": "2023-06-15T10:30:00Z",
-      "image": "path/to/image.jpg",
-      "author": "Author Name",
-      "have_image": true,
-      "categories": [
-        {
-          "id": 1,
-          "title": "Category Title",
-          "slug": "category-slug"
-        }
-      ]
-    },
-    // More articles...
-  ],
-  "total": 50,
-  "limit": 10,
-  "offset": 0
-}
+[
+  {
+    "id": 1,
+    "title": "Article Title",
+    "slug": "article-slug",
+    "date": "2023-06-15T10:30:00Z",
+    "image": "path/to/image.jpg",
+    "have_image": true,
+    "author": "Author Name",
+    "categories": [
+      {
+        "id": 1,
+        "title": "Category Title",
+        "slug": "category-slug"
+      }
+    ]
+  },
+  // More articles...
+]
 ```
 
 **Status Codes:**
 - `200 OK`: Successful request
 - `400 Bad Request`: Invalid parameters
+- `401 Unauthorized`: Missing or invalid API key
 
-#### GET /articles/:slug
+### GET /articles/:slug
 
 Retrieves a specific article by its slug.
 
 **Path Parameters:**
 - `slug`: Unique slug of the article
+
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -263,8 +309,8 @@ Retrieves a specific article by its slug.
   "slug": "article-slug",
   "date": "2023-06-15T10:30:00Z",
   "image": "path/to/image.jpg",
-  "author": "Author Name",
   "have_image": true,
+  "author": "Author Name",
   "content": "Full article content in markdown or HTML format",
   "categories": [
     {
@@ -279,130 +325,11 @@ Retrieves a specific article by its slug.
 **Status Codes:**
 - `200 OK`: Successful request
 - `404 Not Found`: Article not found
+- `401 Unauthorized`: Missing or invalid API key
 
-#### POST /articles
+## Categories
 
-Creates a new article.
-
-**Request Body:**
-```json
-{
-  "title": "New Article Title",
-  "author": "Author Name",
-  "content": "Article content in markdown or HTML",
-  "image": "path/to/image.jpg", // Optional
-  "categories": [1, 2] // Array of category IDs
-}
-```
-
-**Validation Rules:**
-- `title`: Required, string, max 255 characters
-- `author`: Required, string, max 100 characters
-- `content`: Required, string
-- `image`: Optional, string, max 255 characters
-- `categories`: Optional, array of existing category IDs
-
-**Response:**
-```json
-{
-  "id": 3,
-  "title": "New Article Title",
-  "slug": "new-article-title",
-  "date": "2023-06-15T10:30:00Z",
-  "image": "path/to/image.jpg",
-  "author": "Author Name",
-  "have_image": true,
-  "content": "Article content in markdown or HTML",
-  "categories": [
-    {
-      "id": 1,
-      "title": "Category Title",
-      "slug": "category-slug"
-    }
-  ]
-}
-```
-
-**Status Codes:**
-- `201 Created`: Article successfully created
-- `400 Bad Request`: Invalid parameters or validation errors
-- `409 Conflict`: Article with the same slug already exists
-
-#### PUT /articles/:slug
-
-Updates an existing article.
-
-**Path Parameters:**
-- `slug`: Unique slug of the article
-
-**Request Body:**
-```json
-{
-  "title": "Updated Article Title",
-  "author": "Updated Author Name",
-  "content": "Updated article content",
-  "image": "path/to/new-image.jpg",
-  "categories": [1, 3]
-}
-```
-
-**Validation Rules:**
-- All fields are optional, but at least one must be provided
-- Same validation rules as POST apply to provided fields
-
-**Response:**
-```json
-{
-  "id": 3,
-  "title": "Updated Article Title",
-  "slug": "updated-article-title",
-  "date": "2023-06-15T10:30:00Z",
-  "image": "path/to/new-image.jpg",
-  "author": "Updated Author Name",
-  "have_image": true,
-  "content": "Updated article content",
-  "categories": [
-    {
-      "id": 1,
-      "title": "Category Title",
-      "slug": "category-slug"
-    },
-    {
-      "id": 3,
-      "title": "Another Category",
-      "slug": "another-category"
-    }
-  ]
-}
-```
-
-**Status Codes:**
-- `200 OK`: Article successfully updated
-- `400 Bad Request`: Invalid parameters or validation errors
-- `404 Not Found`: Article not found
-- `409 Conflict`: Update would create a duplicate slug
-
-#### DELETE /articles/:slug
-
-Deletes an existing article.
-
-**Path Parameters:**
-- `slug`: Unique slug of the article
-
-**Response:**
-```json
-{
-  "message": "Article successfully deleted"
-}
-```
-
-**Status Codes:**
-- `200 OK`: Article successfully deleted
-- `404 Not Found`: Article not found
-
-### Categories
-
-#### GET /categories
+### GET /categories
 
 Retrieves a list of all categories.
 
@@ -410,6 +337,9 @@ Retrieves a list of all categories.
 - `limit` (optional): Number of categories to return (default: all)
 - `offset` (optional): Number of categories to skip (default: 0)
 
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
+
 **Response:**
 ```json
 {
@@ -417,8 +347,7 @@ Retrieves a list of all categories.
     {
       "id": 1,
       "title": "Category Title",
-      "slug": "category-slug",
-      "article_count": 5
+      "slug": "category-slug"
     },
     // More categories...
   ],
@@ -428,127 +357,58 @@ Retrieves a list of all categories.
 
 **Status Codes:**
 - `200 OK`: Successful request
+- `401 Unauthorized`: Missing or invalid API key
 
-#### GET /categories/:slug
+### GET /categories/:slug
 
-Retrieves a specific category by its slug.
+Retrieves a list of articles in a specific category by its slug.
 
 **Path Parameters:**
 - `slug`: Unique slug of the category
 
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
+
 **Response:**
 ```json
-{
-  "id": 1,
-  "title": "Category Title",
-  "slug": "category-slug",
-  "articles": [
-    {
-      "id": 1,
-      "title": "Article Title",
-      "slug": "article-slug",
-      "date": "2023-06-15T10:30:00Z",
-      "image": "path/to/image.jpg",
-      "author": "Author Name",
-      "have_image": true
-    },
-    // More articles in this category...
-  ]
-}
+[
+  {
+    "id": 1,
+    "title": "Article Title",
+    "slug": "article-slug",
+    "date": "2023-06-15T10:30:00Z",
+    "image": "path/to/image.jpg",
+    "have_image": true,
+    "author": "Author Name",
+    "categories": [
+      {
+        "id": 1,
+        "title": "Category Title",
+        "slug": "category-slug"
+      }
+    ]
+  },
+  // More articles in this category...
+]
+
 ```
 
 **Status Codes:**
 - `200 OK`: Successful request
 - `404 Not Found`: Category not found
+- `401 Unauthorized`: Missing or invalid API key
 
-#### POST /categories
+## Stats
 
-Creates a new category.
-
-**Request Body:**
-```json
-{
-  "title": "New Category Title"
-}
-```
-
-**Validation Rules:**
-- `title`: Required, string, max 100 characters, must be unique
-
-**Response:**
-```json
-{
-  "id": 5,
-  "title": "New Category Title",
-  "slug": "new-category-title",
-  "article_count": 0
-}
-```
-
-**Status Codes:**
-- `201 Created`: Category successfully created
-- `400 Bad Request`: Invalid parameters or validation errors
-- `409 Conflict`: Category with the same title/slug already exists
-
-#### PUT /categories/:slug
-
-Updates an existing category.
-
-**Path Parameters:**
-- `slug`: Unique slug of the category
-
-**Request Body:**
-```json
-{
-  "title": "Updated Category Title"
-}
-```
-
-**Validation Rules:**
-- `title`: Required, string, max 100 characters, must be unique
-
-**Response:**
-```json
-{
-  "id": 5,
-  "title": "Updated Category Title",
-  "slug": "updated-category-title",
-  "article_count": 3
-}
-```
-
-**Status Codes:**
-- `200 OK`: Category successfully updated
-- `400 Bad Request`: Invalid parameters or validation errors
-- `404 Not Found`: Category not found
-- `409 Conflict`: Update would create a duplicate title/slug
-
-#### DELETE /categories/:slug
-
-Deletes an existing category.
-
-**Path Parameters:**
-- `slug`: Unique slug of the category
-
-**Response:**
-```json
-{
-  "message": "Category successfully deleted"
-}
-```
-
-**Status Codes:**
-- `200 OK`: Category successfully deleted
-- `404 Not Found`: Category not found
-
-### Stats
-
-#### GET /stats/articles/:slug
+#### GET /stats/:slug
 
 Retrieves statistics for a specific article.
 
 **Path Parameters:**
 - `slug`: Unique slug of the article
+
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -558,8 +418,8 @@ Retrieves statistics for a specific article.
   "reactions": {
     "like": 42,
     "love": 18,
-    "clap": 7,
-    "insightful": 15
+    "surprised": 7,
+    "sad": 15
   }
 }
 ```
@@ -567,26 +427,7 @@ Retrieves statistics for a specific article.
 **Status Codes:**
 - `200 OK`: Successful request
 - `404 Not Found`: Article stats not found
-
-#### POST /stats/articles/:slug/visit
-
-Increments the visit count for an article.
-
-**Path Parameters:**
-- `slug`: Unique slug of the article
-
-**Response:**
-```json
-{
-  "article_slug": "article-slug",
-  "visits": 1251,
-  "message": "Visit count incremented successfully"
-}
-```
-
-**Status Codes:**
-- `200 OK`: Visit count incremented successfully
-- `404 Not Found`: Article not found
+- `401 Unauthorized`: Missing or invalid API key
 
 #### POST /stats/articles/:slug/reaction
 
@@ -595,15 +436,21 @@ Adds a reaction to an article.
 **Path Parameters:**
 - `slug`: Unique slug of the article
 
+**Required Headers:**
+- `X-API-Key`: Your 50-character secret key
+
 **Request Body:**
 ```json
-{
-  "reaction_type": "like"
-}
+curl -X PUT /api/stats/article-slug \
+-H "Content-Type: application/json" \
+-H "X-API-Key: your_50_character_secret_key" \
+-d '{
+  "reactionType": "like"
+}'
 ```
 
 **Validation Rules:**
-- `reaction_type`: Required, string, must be one of the supported reaction types (like, love, clap, insightful)
+- `reaction_type`: Required, string, must be one of the supported reaction types (like, love, surprised, sad or `visit`)
 
 **Response:**
 ```json
@@ -615,7 +462,7 @@ Adds a reaction to an article.
     "clap": 7,
     "insightful": 15
   },
-  "message": "Reaction added successfully"
+  "visits":517
 }
 ```
 
@@ -623,39 +470,19 @@ Adds a reaction to an article.
 - `200 OK`: Reaction added successfully
 - `400 Bad Request`: Invalid reaction type
 - `404 Not Found`: Article not found
+- `401 Unauthorized`: Missing or invalid API key
 
-#### GET /stats/most-popular
+## Environment Configuration
 
-Retrieves a list of the most popular articles based on visits and reactions.
+The backend requires certain environment variables to be set in a `.env` file:
 
-**Query Parameters:**
-- `limit` (optional): Number of articles to return (default: 5)
-- `period` (optional): Time period - "day", "week", "month", "all" (default: "all")
-
-**Response:**
-```json
-{
-  "most_visited": [
-    {
-      "article_slug": "popular-article-1",
-      "title": "Popular Article 1",
-      "visits": 3500,
-      "total_reactions": 120
-    },
-    // More articles...
-  ],
-  "most_reacted": [
-    {
-      "article_slug": "popular-article-2",
-      "title": "Popular Article 2",
-      "visits": 2800,
-      "total_reactions": 180
-    },
-    // More articles...
-  ]
-}
+```
+PORT=3000
+DATABASE_URL=postgresql://username:password@localhost:5432/smv?schema=dbp
+API_SECRET_KEY=your_50_character_secret_key_here
 ```
 
-**Status Codes:**
-- `200 OK`: Successful request
-- `400 Bad Request`: Invalid parameters
+Key configuration details:
+- `PORT`: The port on which the API server will run
+- `DATABASE_URL`: Connection string for the PostgreSQL database
+- `API_SECRET_KEY`: A 50-character secret key used for API authentication

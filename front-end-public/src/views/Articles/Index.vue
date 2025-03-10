@@ -35,8 +35,6 @@ export default {
     allCategories,
     allArticles
   },
-  created() {
-    console.log('Slug from route:', this.$route.params.slug);
-  }
+  created(){}
 };
 </script>

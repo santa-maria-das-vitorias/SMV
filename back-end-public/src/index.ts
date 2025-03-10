@@ -6,16 +6,20 @@ import compression from 'compression';
 import cluster from 'cluster';
 import os from 'os';
 import net from 'net';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Rotas
 import { PrismaClient } from '@prisma/client';
 import categoryRoutes from './routes/categories';
 import articleRoutes from './routes/articles';
 import statsRoutes from './routes/stats';
+import { apiKeyAuth } from './middleware/auth';
 
+dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 const cache = apicache.middleware;
 
@@ -31,6 +35,18 @@ app.use(limiter);
 app.use(cache('1 second'));
 app.use(helmet());
 app.use(compression());
+
+// API Key authentication middleware for all API routes
+const origin = process.env.DEVELOPMENT === 'false'
+  ? process.env.PROD_FRONT_URL
+  : process.env.DEV_FRONT_URL;
+
+app.use(cors({
+  origin,
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,X-API-Key'
+}));
+app.use('/api', apiKeyAuth);
 
 // Rotas
 app.use('/api/categories', categoryRoutes);

@@ -44,7 +44,13 @@ router.get('/:slug', (req: Request, res: Response) => {
                 author: true,
                 categories: {
                   select: {
-                    category_id: true
+                    category: {
+                      select: {
+                        id: true,
+                        title: true,
+                        slug: true
+                      }
+                    }
                   }
                 }
               }
@@ -57,7 +63,14 @@ router.get('/:slug', (req: Request, res: Response) => {
         return res.status(404).json({ error: 'Categoria não encontrada' });
       }
 
-      const articles = category.articles.map(articleCategory => articleCategory.article);
+      // Transform the articles to include the flattened categories array
+      const articles = category.articles.map(articleCategory => {
+        const article = articleCategory.article;
+        return {
+          ...article,
+          categories: article.categories.map(cat => cat.category)
+        };
+      });
 
       res.json(articles);
     }).catch((error) => {

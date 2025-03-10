@@ -11,7 +11,7 @@
         </a>
       </div>
     </div>
-    <p v-else>Nenhum artigo</p>
+    <p v-else>Nenhuma categoria encontrada</p>
   </div>
 </template>
 

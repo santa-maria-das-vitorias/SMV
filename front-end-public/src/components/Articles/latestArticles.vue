@@ -2,7 +2,7 @@
   <div v-if="filteredArticles.length">
     <div v-for="article in filteredArticles" :key="article.id">
       <a
-        :href="`/artigos/${generateSlug(article.category)}/${generateSlug(article.title)}`"
+        :href="`/artigos/${generateSlug(article.categories[0]?.title)}/${generateSlug(article.title)}`"
       >
         <p class="py-4 px-2 hover:bg-surface-50 hover:text-primary-500 transition-all ">
           {{ article.title }}
@@ -31,22 +31,27 @@ export default {
   },
   data() {
     return {
-      LatestArticles: [],
+      latestArticles: [],
     };
   },
   async created() {
-    this.LatestArticles = await fetchLatestArticles();
+    try {
+      this.latestArticles = await fetchLatestArticles();
+    } catch (error) {
+      console.error('Erro ao carregar os artigos mais recentes:', error);
+    }
   },
   computed: {
     filteredArticles() {
       const filtered = this.category
-        ? this.LatestArticles.filter(article => article.category === this.category)
-        : this.LatestArticles;
+        ? this.latestArticles.filter(article => article.categories.some(cat => cat.slug === this.category))
+        : this.latestArticles;
       return filtered.slice(0, this.slice).sort((a, b) => new Date(b.date) - new Date(a.date));
     },
   },
   methods: {
     generateSlug(title) {
+      if (!title) return '';
       return title
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")

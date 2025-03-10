@@ -19,8 +19,10 @@
       {{ article.author }} - {{ new Intl.DateTimeFormat('pt-BR').format(new Date(article.date)) }}
     </p>
   </div>
+  <div v-else class="text-center py-4">
+    <p>{{ error }}</p>
+  </div>
 </template>
-
 
 <script>
 import { fetchSingleArticle } from "@/api/fetchSingleArticle";

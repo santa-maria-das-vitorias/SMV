@@ -42,6 +42,7 @@
 
 <script>
 import { fetchReactionsArticle } from '@/api/fetchReactionsArticle';
+import { addReactionArticle } from '@/api/addReactionArticle';
 
 export default {
   props: {
@@ -69,17 +70,16 @@ export default {
     async loadReactions() {
       try {
         const data = await fetchReactionsArticle({ articleSlug: this.articleSlug });
-        this.like = data.reactions.like;
-        this.love = data.reactions.love;
-        this.surprised = data.reactions.surprised;
-        this.sad = data.reactions.sad;
-        this.currentReaction = data.currentReaction;
-        this.visits = data.visits;
+        this.like = data.reactions.like || 0;
+        this.love = data.reactions.love || 0;
+        this.surprised = data.reactions.surprised || 0;
+        this.sad = data.reactions.sad || 0;
+        this.visits = data.visits || 0;
       } catch (error) {
         console.error('Erro ao carregar reações:', error);
       }
     },
-    react(reaction) {
+    async react(reaction) {
       // Prevent spamming by disabling buttons while processing
       if (this.isProcessing) {
         return;
@@ -88,24 +88,28 @@ export default {
       // Set processing state
       this.isProcessing = true;
 
-      // Set new reaction count
-      this.reactionTimeout = setTimeout(() => {
+      try {
+        const data = await addReactionArticle({ articleSlug: this.articleSlug, reactionType: reaction });
+
+        // Update reactions and visits based on the response
+        this.like = data.reactions.like || 0;
+        this.love = data.reactions.love || 0;
+        this.surprised = data.reactions.surprised || 0;
+        this.sad = data.reactions.sad || 0;
+        this.visits = data.visits || 0;
+
+        // Update current reaction
         if (this.currentReaction === reaction) {
-          this[reaction]--;
           this.currentReaction = null;
         } else {
-          if (this.currentReaction) {
-            this[this.currentReaction]--;
-          }
-          this[reaction]++;
           this.currentReaction = reaction;
         }
-
+      } catch (error) {
+        console.error('Erro ao adicionar reação:', error);
+      } finally {
         // Reset processing state
         this.isProcessing = false;
-
-        // Aqui você pode adicionar a lógica para enviar a reação ao servidor
-      }, 1000);
+      }
     },
   },
 };

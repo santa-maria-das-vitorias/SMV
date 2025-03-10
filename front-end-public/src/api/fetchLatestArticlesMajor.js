@@ -1,22 +1,35 @@
-import allArticles from '@/api/data/allArticles.json';
-import { isProduction } from '@/utils/isProduction';
+export const fetchLatestArticlesMajor = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/articles`, {
+      headers: {
+        'X-API-Key': import.meta.env.VITE_API_KEY
+      }
+    });
 
-export const fetchAllArticles = async () => {
-  const articlesWithImageUrls = allArticles.map(article => {
-    const imageUrl = article.image
-      ? isProduction
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const articles = await response.json();
+
+    // Adicionar URLs completas das imagens
+    const articlesWithImageUrls = articles.map(article => {
+      const imageUrl = article.image
         ? `${import.meta.env.VITE_IMAGE_URL}${article.image}`
-        : `/upload${article.image}`
-      : null;
+        : null;
 
-    return {
-      ...article,
-      imageUrl,
-    };
-  });
+      return {
+        ...article,
+        imageUrl,
+      };
+    });
 
-  // Ordenar os artigos por data, do mais recente para o mais antigo
-  const sortedArticles = articlesWithImageUrls.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // Ordenar os artigos por data, do mais recente para o mais antigo
+    const sortedArticles = articlesWithImageUrls.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  return sortedArticles;
+    return sortedArticles;
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+    throw error;
+  }
 };
