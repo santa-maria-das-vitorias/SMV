@@ -2,7 +2,7 @@
   <div v-if="filteredArticles.length">
     <div v-for="article in filteredArticles" :key="article.id">
       <a
-        :href="`/artigos/${generateSlug(article.categories[0]?.title)}/${generateSlug(article.title)}`"
+        :href="`/artigos/${article.categories[0]?.slug}/${generateSlug(article.title)}`"
       >
         <p class="py-4 px-2 hover:bg-surface-50 hover:text-primary-500 transition-all ">
           {{ article.title }}
