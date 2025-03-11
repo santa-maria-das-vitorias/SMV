@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    console.log('Fetching categories...');
     const categories = await prisma.category.findMany({
       select: {
         id: true,

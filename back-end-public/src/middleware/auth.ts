@@ -8,7 +8,7 @@ const API_SECRET_KEY = process.env.API_SECRET_KEY;
 /**
  * Middleware to verify the API key in the request header
  * 
- * This middleware checks for a valid API key in the X-API-Key header.
+ * This middleware checks for a valid API key in the x-api-key header.
  * If the key is missing or invalid, the request is rejected with a 401 status.
 */
 export const apiKeyAuth = (req: Request, res: Response, next: NextFunction): void => {

@@ -21,6 +21,21 @@ const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
+// API Key authentication middleware for all API routes
+const origin = process.env.DEVELOPMENT === 'false'
+  ? process.env.PROD_FRONT_URL
+  : process.env.DEV_FRONT_URL;
+
+app.use(cors({
+  origin: origin,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'X-API-Key', 'x-api-key', 'Authorization'],
+  exposedHeaders: ['X-API-Key'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
+
 const cache = apicache.middleware;
 
 const limiter = rateLimit({
@@ -36,18 +51,6 @@ app.use(cache('1 hour'));
 app.use(helmet());
 app.use(compression());
 
-// API Key authentication middleware for all API routes
-const origin = process.env.DEVELOPMENT === 'false'
-  ? process.env.PROD_FRONT_URL
-  : process.env.DEV_FRONT_URL;
-
-app.use(cors({
-  origin,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'X-API-Key'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204
-}));
 app.use('/api', apiKeyAuth);
 
 // Rotas

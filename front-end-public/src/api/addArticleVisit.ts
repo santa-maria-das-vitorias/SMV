@@ -25,7 +25,7 @@ export const addArticleVisit = async ({ articleSlug }: AddArticleVisitParams): P
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': import.meta.env.VITE_API_KEY
+        'x-api-key': import.meta.env.VITE_API_KEY
       },
       body: JSON.stringify({ articleSlug, stat: 'visit' })
     });

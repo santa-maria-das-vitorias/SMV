@@ -174,7 +174,7 @@ All API requests require authentication using a secret key in the request header
 
 **Header Parameter:**
 ```
-X-API-Key: your_50_character_secret_key
+x-api-key: your_50_character_secret_key
 ```
 
 The secret key is stored in the backend's .env file. Any request without a valid secret key will be rejected with a 401 Unauthorized response.
@@ -182,7 +182,7 @@ The secret key is stored in the backend's .env file. Any request without a valid
 **Example Request with Authentication:**
 ```bash
 curl -X GET http://localhost:3000/api/articles \
--H "X-API-Key: your_50_character_secret_key"
+-H "x-api-key: your_50_character_secret_key"
 ```
 
 **Status Codes for Authentication Failures:**
@@ -201,7 +201,7 @@ Retrieves a list of all articles.
 - `search` (optional): Search text in article title and content
 
 **Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+- `x-api-key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -239,7 +239,7 @@ Retrieves a specific article by its slug.
 - `slug`: Unique slug of the article
 
 **Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+- `x-api-key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -278,7 +278,7 @@ Retrieves a list of all categories.
 - `offset` (optional): Number of categories to skip (default: 0)
 
 **Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+- `x-api-key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -305,7 +305,7 @@ Retrieves a list of articles in a specific category by its slug.
 - `slug`: Unique slug of the category
 
 **Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+- `x-api-key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -346,7 +346,7 @@ Retrieves statistics for a specific article.
 - `articleSlug`: Unique slug of the article
 
 **Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+- `x-api-key`: Your 50-character secret key
 
 **Response:**
 ```json
@@ -384,7 +384,7 @@ Adds a reaction or visit to an article.
 - `stat`: Required, string, must be one of the supported reaction types (like, love, surprised, sad, visit)
 
 **Required Headers:**
-- `X-API-Key`: Your 50-character secret key
+- `x-api-key`: Your 50-character secret key
 
 **Response:**
 ```json

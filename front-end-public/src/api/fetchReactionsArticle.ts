@@ -27,7 +27,7 @@ export const fetchReactionsArticle = async ({ articleSlug }: FetchReactionsArtic
   try {
     const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/stats/${articleSlug}`, {
       headers: {
-        'X-API-Key': import.meta.env.VITE_API_KEY
+        'x-api-key': import.meta.env.VITE_API_KEY
       }
     });
 
