@@ -65,18 +65,6 @@ def populate_db():
                             INSERT INTO dbp.article_categories (article_id, category_id)
                             SELECT %s, id FROM dbp.categories WHERE title = %s
                         """, (article_id, category['title']))
-
-                # Inicializa estatísticas
-                cur.execute("""
-                    INSERT INTO public_stats.article_stats (article_slug, reactions, visits)
-                    VALUES (%s, %s, %s)
-                    ON CONFLICT (article_slug) DO NOTHING
-                """, (
-                    article['slug'],
-                    Json({'like': 0, 'love': 0, 'surprised': 0, 'sad': 0}),
-                    0
-                ))
-
         conn.commit()
 
     except Exception as e:
@@ -87,4 +75,5 @@ def populate_db():
         conn.close()
 
 if __name__ == "__main__":
+    populate_db()
     populate_db()
