@@ -91,7 +91,7 @@ export default {
       { image:"/home/carrossel/paço-municipal-mococa.jpg", name: "Paço Municipal de Mococa, SP - 1930"},
       { image: "/home/carrossel/aspectos-pitorescos-2.jpg", name: "Washington Luís e o arcebispo D. Duarte Leopoldo na matriz de Pirapora, MG- 1922"},
       { image: "/home/carrossel/aspectos-pitorescos-3.jpg", name: "Matriz do Patrocínio - 1930"},
-      { image: "/home/carrossel/aspectos-pitorescos-4.jpg", name: "Estação Ferroviária da Cia Paulista - 1917"},
+      { image: "/home/carrossel/jau_velha.jpg", name: "Velha Estação Rodoviária em Jaú, SP - 1917"},
       { image: "/home/carrossel/aspectos-pitorescos-5.jpg", name: "Desfile Cívico"},
       { image: "/home/carrossel/faculdade-de-direito.webp", name: "Faculdade de Direito e Igreja São Francisco (SP) - 1900"},
       { image: "/home/carrossel/estacao-da-luz.webp", name: "Estação da Luz em construção (SP) - 1900"},
@@ -104,6 +104,8 @@ export default {
       { image: "/home/carrossel/sala-de-operacoes.jpg", name: "Sala de Operações do Hospital de Caridade de Santa Maria, RS - 1910"},
       { image: "/home/carrossel/igreja-matriz-araraquara.jpg", name: "Igreja Matriz de Araraquara, SP - 1914"},
       { image: "/home/carrossel/mosteiro-sao-bento.jpg", name: "Mosteiro São Bento (SP) - 1903"},
+      { image: "/home/carrossel/rua_edgard.jpg", name: "Rua Edgard Ferraz - Jaú, SP - 1920"},
+      
     ]);
 
     const currentIndex = ref(0);
