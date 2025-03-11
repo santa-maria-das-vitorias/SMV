@@ -104,7 +104,8 @@ export default {
       { image: "/home/carrossel/sala-de-operacoes.jpg", name: "Sala de Operações do Hospital de Caridade de Santa Maria, RS - 1910"},
       { image: "/home/carrossel/igreja-matriz-araraquara.jpg", name: "Igreja Matriz de Araraquara, SP - 1914"},
       { image: "/home/carrossel/mosteiro-sao-bento.jpg", name: "Mosteiro São Bento (SP) - 1903"},
-      { image: "/home/carrossel/rua_edgard.jpg", name: "Rua Edgard Ferraz - Jaú, SP - 1920"},
+      { image: "/home/carrossel/rua_edgard.jpg", name: "Rua Edgard Ferraz - Jaú, SP - 1920"},      
+      { image: "/home/carrossel/douradense.jpg", name: "Estação da Douradense - Jaú, SP - 1917"},
       
     ]);
 
