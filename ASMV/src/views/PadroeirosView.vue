@@ -38,7 +38,7 @@
 
           <h2 class="text-center text-2xl mt-2">São Pio X</h2>
           <img src="/about/PioX.jpg" alt="São Pio X" class="max-w-56 mt-4 rounded-lg shadow-lg object-cover">
-          <p>Rogamos a São Pio X a graça de jamais transigir com o modernismo, a cloaca de todas heresias.</p>
+          <p>O papa mais santo que jamais houve depois de São Pedro, segundo o Padre Pio. Foi o paladino da integridade da fé católica contra os ataques da heresia modernista. Autorizou as crianças a receber a primeira comunhão, convencido de que a Sagrada Eucaristia as faria crescer na santidade. Rogamos a São Pio X a graça de jamais transigir com o modernismo, a cloaca de todas heresias.</p>
         </div>
       </div>
     </div>
