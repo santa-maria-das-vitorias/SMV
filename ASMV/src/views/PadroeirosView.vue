@@ -7,9 +7,9 @@
           <h2 class="text-center text-2xl mt-2">Nossa Senhora das Vitórias</h2>
           <img src="/about/NossaSenhoraDasVitorias.jpg" alt="Nossa Senhora das Vitórias" class="max-w-56 mt-4 rounded-lg shadow-lg object-cover">
 
-          <p>Em nossa capela dedicada a Santa Maria das Vitórias veneramos uma imagem da Santíssima Virgem cópia fiel da imagem de Nossa Senhora das Vitórias de Paris.</p>
+          <p>Em nossa capela dedicada a Santa Maria das Vitórias veneramos uma imagem da Santíssima Virgem, cópia fiel da imagem de Nossa Senhora das Vitórias de Paris.</p>
           
-          <p>A devoção à Nossa Senhora das Vitórias está ligada à história da França do século XVII, mais precisamente à vitória dos católicos sobre os protestantes na batalha de La Rochelle e à novena da rainha Ana d' Áustria para obter a graça de um herdeiro do trono. Em ação de graças pelos benefícios recebidos,  o rei Luís XIII consagrou o Reino da França a Nossa Senhora e mandou construir a Basílica  de Nossa Senhora das Vitórias de Paris.</p>
+          <p>A devoção a Nossa Senhora das Vitórias está ligada à história da França do século XVII, mais precisamente à vitória dos católicos sobre os protestantes na batalha de La Rochelle, e à novena da rainha Ana d' Áustria para obter a graça de um herdeiro do trono. Em ação de graças pelos benefícios recebidos,  o rei Luís XIII consagrou o Reino da França a Nossa Senhora e mandou construir a Basílica de Nossa Senhora das Vitórias de Paris.</p>
 
           <p>Em nossa Capela colocamo-nos sob o patrocínio de Nossa Senhora Rainha das Vitórias porque confiamos em sua proteção para o triunfo da Fé Católica sobre os hereges e celebramos sua festa no dia 31 de maio, festa de Nossa Senhora Rainha.</p>
 
@@ -34,7 +34,7 @@
 
           <h2 class="text-center text-2xl mt-2">Santo Tomás de Aquino</h2>
           <img src="/about/TomasAquino.jpg" alt="Santo Tomás de Aquino" class="max-w-56 mt-4 rounded-lg shadow-lg object-cover">
-          <p>Estamos igualmente sob o orago de Santo Tomás de Aquino, o doutor Angélico, o doutor universal da Igreja, cuja doutrina foi inúmeras vezes enaltecida pelos Papas, que expressamente ensinaram: "afastar-se da metafísica e da teologia de Santo Tomás não é sem perigo para fé" ( Leão XIII, São Pio X Pio XI). Rogamos a Santo Tomás a graça de guardar íntegra nossa fé católica.</p>
+          <p>Estamos igualmente sob o orago de Santo Tomás de Aquino, o Doutor Angélico, o Doutor Universal da Igreja, cuja doutrina foi inúmeras vezes enaltecida pelos Papas ao ensinarem: "afastar-se da metafísica e da teologia de Santo Tomás não é sem perigo para fé" ( Leão XIII, São Pio X e Pio XI). Rogamos a Santo Tomás a graça de guardar íntegra nossa fé católica.</p>
 
           <h2 class="text-center text-2xl mt-2">São Pio X</h2>
           <img src="/about/PioX.jpg" alt="São Pio X" class="max-w-56 mt-4 rounded-lg shadow-lg object-cover">

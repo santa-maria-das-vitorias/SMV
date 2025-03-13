@@ -69,7 +69,7 @@ export default {
     const slides = ref([
       
       
-      { image: "/home/carrossel/descobrimento-brasil.webp", name: "Oscar Pereira sa Silva - Descobrimento do Brasil"},
+      { image: "/home/carrossel/descobrimento-brasil.webp", name: "Oscar Pereira da Silva - Desembarque de Pedro Álvares Cabral em Porto Seguro em 1500"},
       { image: "/home/carrossel/primeira-missa.jpg", name: "Victor Meirelles - Primeira Missa no Brasil" },
       { image: "/home/carrossel/elevacao-cruz.jpg", name: "Pedro Peres - A Elevação da Cruz em Porto Seguro"},
       { image: "/home/carrossel/fundacao-sao-paulo.jpg", name: "Oscar Pereira da Silva - Fundação de São Paulo"},
@@ -91,7 +91,7 @@ export default {
       { image:"/home/carrossel/paço-municipal-mococa.jpg", name: "Paço Municipal de Mococa, SP - 1930"},
       { image: "/home/carrossel/aspectos-pitorescos-2.jpg", name: "Washington Luís e o arcebispo D. Duarte Leopoldo na matriz de Pirapora, MG- 1922"},
       { image: "/home/carrossel/aspectos-pitorescos-3.jpg", name: "Matriz do Patrocínio - 1930"},
-      { image: "/home/carrossel/jau_velha.jpg", name: "Velha Estação Rodoviária em Jaú, SP - 1917"},
+      { image: "/home/carrossel/jau_velha.jpg", name: "Velha Estação Ferroviária em Jaú, SP - 1917"},
       { image: "/home/carrossel/aspectos-pitorescos-5.jpg", name: "Desfile Cívico"},
       { image: "/home/carrossel/faculdade-de-direito.webp", name: "Faculdade de Direito e Igreja São Francisco (SP) - 1900"},
       { image: "/home/carrossel/estacao-da-luz.webp", name: "Estação da Luz em construção (SP) - 1900"},

@@ -296,7 +296,7 @@ export default {
           title: "Somos contra o Liberalismo e a Modernidade",
           image: "/home/cards/pio-ix.png",
           description: "Proposições condenadas pelo Syllabus de Pio IX: “Efetivamente, é falso que a liberdade civil de qualquer culto, assim como a plena potestade concedida a todos de manifestar aberta e publicamente quaisquer opiniões e pensamentos, conduza mais facilmente à corrupção dos costumes e do espírito dos povos, bem como à propagação da peste do indiferentismo“.",
-          footer: "O Romano Pontífice pode e deve reconciliar-se e transigir com o progresso, com o liberalismo e com a civilização moderna.",
+          footer: '"O Romano Pontífice pode e deve reconciliar-se e transigir com o progresso, com o liberalismo e com a civilização moderna."',
         },
         {
           title: "Compreenda o problema da reforma litúrgica",
