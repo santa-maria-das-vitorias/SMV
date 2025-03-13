@@ -19,10 +19,12 @@
             class="absolute transition-all duration-500 ease-in-out rounded-lg shadow-lg overflow-hidden"
             :class="slideClasses(index)"
           >
-            <img :src="slideGrav.image" :alt="slideGrav.name" class=" w-120 h-96 object-cover rounded-lg items-center" />
-            <h1 class="text-sm font-semibold text-center mt-2 text-white bg-primary-500 p-2 text-wrap w-120">
-              {{ slideGrav.name }}
-            </h1>
+            <div class= "">
+              <img :src="slideGrav.image" :alt="slideGrav.name" class="w-full h-96 object-cover rounded-lg" />
+              <h1 class="text-sm font-semibold text-center mt-1 text-white bg-primary-500 py-1 text-wrap w-full">
+                {{ slideGrav.name }}
+              </h1>
+          </div>
           </div>
         </transition-group>
       </div>
